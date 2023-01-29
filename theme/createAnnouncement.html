@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="description"
+      content="Orbitor,business,company,agency,modern,bootstrap4,tech,software"
+    />
+    <meta name="author" content="themefisher.com" />
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+
+    <!-- theme meta -->
+    <meta name="theme-name" content="orbitor-bulma" />
+
+    <title>Animal Ark</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+
+    <!-- bootstrap.min css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+      integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bulma-social@2.1.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Icon Font Css -->
+    <link rel="stylesheet" href="plugins/themify/css/themify-icons.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="plugins/magnific-popup/dist/magnific-popup.css"
+    />
+    <link rel="stylesheet" href="plugins/modal-video/modal-video.css" />
+    <link rel="stylesheet" href="plugins/animate-css/animate.css" />
+    <!-- Slick Slider  CSS -->
+    <link rel="stylesheet" href="plugins/slick-carousel/slick/slick.css" />
+    <link
+      rel="stylesheet"
+      href="plugins/slick-carousel/slick/slick-theme.css"
+    />
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.1.18/dist/js/bulma-calendar.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.1.18/dist/css/bulma-calendar.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div id="navbar" class="navigation py-4">
+      <div class="container">
+        <nav class="navbar">
+          <div class="navbar-brand">
+            <a class="navbar-item mr-5" href="index.html">
+              <img src="images/logo.png" width="200" alt="logo" />
+            </a>
+            <button
+              role="button"
+              class="navbar-burger burger"
+              data-hidden="true"
+              data-target="navigation"
+            >
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <div class="navbar-menu" id="navigation">
+            <ul class="navbar-start">
+              <li class="navbar-item">
+                <a class="navbar-link" href="index.html">Home</a>
+              </li>
+
+              <li class="navbar-item">
+                <a class="navbar-link" href="cust_shop.html">Products</a>
+              </li>
+
+              <li class="navbar-item">
+                <a class="navbar-link" href="./FAQs.html">FAQ</a>
+              </li>
+            </ul>
+            <ul class="navbar-end ml-0">
+              <li class="navbar-item">
+                <a href="" class="btn btn-solid-border">
+                  <i class="fa fa-shopping-cart"></i>
+                </a>
+              </li>
+              <li class="navbar-item">
+                <a href="./login.html" class="btn btn-solid-border"
+                  >Log-in <i class="fa fa-angle-right ml-2"></i
+                ></a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <section class="container mb-6">
+      <div class="columns is-multiline">
+        <div class="column is-8 is-offset-2 register mb-6">
+          <div class="columns">
+            <div class="column left">
+              <h1 class="my-4">Create Announcement</h1>
+              <h2 class="subtitle colored is-4">
+                Use the form on the right to create an announment.
+              </h2>
+              <p>
+                Having an account will give you certain features like boom panes
+                ganern
+              </p>
+            </div>
+            <div class="column right has-text-centered">
+              <form action="reg.php" method="POST">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      class="input is-medium demo"
+                      name="date"
+                      type="text"
+                      placeholder="mm/dd/yyyy"
+                      required="required"
+                    />
+                  </div>
+                </div>
+
+                <div class="field">
+                    
+                  <div class="control">
+                    <label class="label"> Description </label>
+                    <textarea
+                      class="textarea"
+                      name="description"
+                      type="text"
+                      required="required"
+                      rows="10"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <button
+                  class="btn is-block is-medium btn-main submitButton mb-2"
+                  type="submit"
+                >
+                  Submit
+                </button>
+                <br />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- footer Start -->
+    <footer class="footer section">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-3-widescreen is-6-tablet">
+            <div class="widget">
+              <div class="logo mb-4">
+                <h3>Animal Ark</h3>
+              </div>
+              <p>
+                Tempora dolorem voluptatum nam vero assumenda voluptate, facilis
+                ad eos obcaecati tenetur veritatis eveniet distinctio.
+              </p>
+            </div>
+          </div>
+          <div class="column is-2-widescreen is-6-desktop is-6-tablet ml-auto">
+            <div class="widget">
+              <h4 class="is-capitalize mb-4">Company</h4>
+
+              <ul class="list-unstyled footer-menu lh-35">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Team</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="column is-3-widescreen is-6-desktop is-6-tablet">
+            <div class="widget">
+              <h4 class="is-capitalize mb-4">Support</h4>
+
+              <ul class="list-unstyled footer-menu lh-35">
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="column is-3-widescreen is-6-desktop is-6-tablet">
+            <div class="widget widget-contact">
+              <h4 class="is-capitalize mb-4">Get in Touch</h4>
+              <h6>
+                <a href="tel:+23-345-67890">
+                  <i class="ti-headphone-alt mr-3"></i>Support@megakit.com</a
+                >
+              </h6>
+              <h6>
+                <a href="mailto:support@gmail.com">
+                  <i class="ti-mobile mr-3"></i>+23-456-6588</a
+                >
+              </h6>
+
+              <ul class="list-inline footer-socials mt-5">
+                <li class="list-inline-item">
+                  <a href="https://www.facebook.com/themefisher"
+                    ><i class="ti-facebook mr-2"></i
+                  ></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="https://twitter.com/themefisher"
+                    ><i class="ti-twitter mr-2"></i
+                  ></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="https://www.pinterest.com/themefisher/"
+                    ><i class="ti-linkedin mr-2"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-btm py-4 mt-6">
+          <div class="columns">
+            <div class="column is-6-widescreen">
+              <div class="copyright">
+                &copy; Copyright Reserved to
+                <span class="text-color">Animal Ark</span> by
+                <a href="https://themefisher.com/" target="_blank"
+                  >Cheska Mylabs</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script>
+    var myCal = bulmaCalendar.attach(".demo", {
+      type: "date",
+      dateFormat: "MM/dd/yyyy",
+      showClearButton: false,
+    });
+  </script>
+  <style>
+    :root {
+      --brandColor: #ff715b;
+      --background: #fff;
+      --textDark: hsla(0, 0%, 0%, 0.66);
+      --textLight: hsla(0, 0%, 0%, 0.33);
+    }
+
+    body {
+      background: var(--background);
+      height: 100vh;
+      color: var(--textDark);
+    }
+
+    .field:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    .register {
+      margin-top: 10rem;
+      background: rgb(247, 247, 247);
+      border-radius: 10px;
+    }
+
+    .left,
+    .right {
+      padding: 4.5rem;
+    }
+
+    .left {
+      border-right: 5px solid var(--background);
+    }
+
+    .left .title {
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+
+    .left .colored {
+      color: var(--brandColor);
+      font-weight: 500;
+      margin-top: 1rem !important;
+      letter-spacing: -1px;
+    }
+
+    .left p {
+      color: var(--textLight);
+      font-size: 1.15rem;
+    }
+
+    .right .title {
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .right .description {
+      margin-top: 1rem;
+      margin-bottom: 1rem !important;
+      color: var(--textLight);
+      font-size: 1.15rem;
+    }
+
+    input {
+      font-size: 1rem;
+    }
+
+    input:focus {
+      border-color: var(--brandColor) !important;
+      box-shadow: 0 0 0 1px var(--brandColor) !important;
+    }
+
+    .fab,
+    .fas {
+      color: var(--textLight);
+      margin-right: 1rem;
+    }
+    .submitButton {
+      width: 100%;
+    }
+    .datetimepicker-dummy.is-primary .datetimepicker-dummy-wrapper::before,
+    .datetimepicker-dummy.is-primary .datetimepicker-dummy-wrapper:before,
+    .datetimepicker-dummy.is-primary::before,
+    .datetimepicker-dummy.is-primary:before {
+      background-color: #ff715b;
+    }
+    .datetimepicker-dummy.is-primary .datetimepicker-clear-button {
+      color: #ff715b;
+    }
+    .datetimepicker.is-primary .datepicker-nav {
+      background: #ff715b;
+      color: #fff;
+    }
+    .datetimepicker.is-primary
+      .datepicker-body
+      .datepicker-dates
+      .datepicker-days
+      .datepicker-date
+      .date-item.is-today {
+      border-color: #ff715b;
+      color: #ff715b;
+    }
+    .datetimepicker.is-primary
+      .datetimepicker-header
+      .datetimepicker-selection-day {
+      color: #ff715b;
+    }
+  </style>
+</html>
