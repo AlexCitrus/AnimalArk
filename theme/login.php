@@ -1,4 +1,6 @@
 <?php
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
 session_start();
 $email = ($_POST['email']);
 $pass = ($_POST['pass']);
@@ -40,4 +42,5 @@ else {
     Print '<script>alert("Incorrect Email!");</script>'; //Prompts the user
     Print '<script>window.location.assign("login.html");</script>'; // redirects to login.php
     }
+}
 ?>
