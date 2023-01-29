@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         mysqli_query($con, "INSERT INTO users (fname, lname, pass, email) VALUES
         ('$fname', '$lname', '$pass','$email')"); //Inserts the value to table users
         Print '<script>alert("Successfully Registered!");</script>'; // Prompts the user
-        Print '<script>window.location.assign("register.php");</script>'; // redirects to register.php
+        Print '<script>window.location.assign("login.html");</script>'; // redirects to register.php
     }
  }
 ?>
