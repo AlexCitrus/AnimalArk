@@ -1,5 +1,4 @@
 <?php
-if(isset($_POST['email'])){
 session_start();
 $email = ($_POST['email']);
 $pass = ($_POST['pass']);
@@ -28,7 +27,7 @@ if($results != "") //IF there are no returning rows or no existing username
         {
         $_SESSION['user'] = $email; //set the username in a session. This serves as a global variable
         Print '<script>alert("Successfully Logged In!");</script>'; // Prompts the user
-        header("location: cust_shop.html"); // redirects the user to the authenticated home page
+        Print '<script>window.location.assign("cust_shop.html");</script>'; // redirects to register.php
         }
     }
     else
@@ -41,5 +40,4 @@ else {
     Print '<script>alert("Incorrect Email!");</script>'; //Prompts the user
     Print '<script>window.location.assign("cust_shop.html");</script>'; // redirects to login.php
     }
-}
 ?>
