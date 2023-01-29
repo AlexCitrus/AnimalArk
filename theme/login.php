@@ -1,5 +1,6 @@
 <?php
 if(isset($_POST['email'])){
+session_start();
 $email = ($_POST['email']);
 $pass = ($_POST['pass']);
 $db_name = "id20217626_test";
@@ -33,12 +34,12 @@ if($results != "") //IF there are no returning rows or no existing username
     else
     {
         Print '<script>alert("Incorrect Password!");</script>'; //Prompts the user
-        Print '<script>window.location.assign("login.html");</script>'; // redirects to login.php
+        Print '<script>window.location.assign("cust_shop.html");</script>'; // redirects to login.php
     }
 }
 else {
     Print '<script>alert("Incorrect Email!");</script>'; //Prompts the user
-    Print '<script>window.location.assign("login.html");</script>'; // redirects to login.php
+    Print '<script>window.location.assign("cust_shop.html");</script>'; // redirects to login.php
     }
 }
 ?>
