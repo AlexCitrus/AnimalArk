@@ -899,7 +899,6 @@ h2.title {
   transition: height 500ms ease 0s;
   width: 100%;
   display: block;
-  opacity:;
 }
 
 .single-products:hover .product-overlay {
@@ -1161,8 +1160,10 @@ h2.title {
 
 .product-details {
   margin-bottom: 40px;
+  width:auto;
   overflow: hidden;
   margin-top: 10px;
+  background-color: #ff715b29;
 }
 
 
@@ -1215,10 +1216,9 @@ h2.title {
 }
 
 .product-information {
-  border: 1px solid #F7F7F0;
   overflow: hidden;
   padding-bottom: 60px;
-  padding-left: 60px;
+  padding-left: 35px;
   padding-top: 60px;
   position: relative;
 }
@@ -1538,7 +1538,7 @@ h2.title {
 
 .breadcrumbs .breadcrumb li a {
   background:#ff715b;
-  color: #FFFFFF;
+  color: #ffffff00;
   padding: 3px 7px;
 }
 
@@ -1557,6 +1557,17 @@ h2.title {
 
 .breadcrumbs .breadcrumb > li + li:before {
   content: " ";
+}
+
+#breadcrumbs {
+  font-size: 14px;
+  color: #999;
+  padding: 8px 0;
+}
+
+#breadcrumbs a {
+  color: #ff715b;
+  text-decoration-color: blue; ;
 }
 
 #cart_items .cart_info {
