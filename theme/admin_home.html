@@ -74,16 +74,6 @@
             <a class="navbar-item mr-5" href="admin_home.html">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
-            <button
-              role="button"
-              class="navbar-burger burger"
-              data-hidden="true"
-              data-target="navigation"
-            >
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </button>
           </div>
 
           <div class="navbar-menu" id="navigation">
@@ -146,6 +136,12 @@
       <div class="container">
         <div class="columns is-desktop">
           <div class="column is-desktop">
+
+            <div class="btn_cont">
+                <button class="button">Create New</button>
+            </div>
+            </br>
+            </br>
             <div class="card is-horizontal">
               <div class="card-image">
                 <figure class="image is-square">
@@ -155,20 +151,39 @@
               <div class="card-stacked">
                 <div class="card-content">
                   <div class="media-content">
+
+                        <div class="radio_cont">
+                            <label style="font-size: 20px;">Status:  </label>
+                            <input type="radio" name="group1" value="option1"> Open
+                            <input type="radio" name="group1" value="option2"> Closed<br>
+                        </div>
+                        
                     <p class="title is-1">Announcement</p>
-                    <br />
+
+                    <div class="content">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Phasellus nec iaculis mauris. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                        <a href="#">#css</a> <a href="#">#responsive</a>
+                        <br />
+                        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+
+                        <div class="annce_btn">
+                            <button class="edit-button">Edit</button>
+                            <button class="delete-button">Delete</button>
+                        </div>
+
                   </div>
 
-                  <div class="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec iaculis mauris. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                    <a href="#">#css</a> <a href="#">#responsive</a>
-                    <br />
-                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                  </div>
+
+
+
+
+                </div>
+
+
                 </div>
               </div>
             </div>

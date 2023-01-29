@@ -399,6 +399,54 @@ a:focus {
   padding-right: 15px;
 }
 
+.btn_cont {
+  position: relative;
+}
+
+
+.radio_cont {
+  text-align: right;
+}
+
+.radio {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+/* dito */
+.annce_btn{
+  display: flex;
+  justify-content: right;
+  border-color: transparent;
+}
+
+.edit-button, .delete-button {
+  margin: 0 10px;
+  background-color: #ff715b; 
+  color: white;
+  width: 100px;
+  display: inline-block;
+  font-size: 15px;
+  height: 43px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+
+
+.button {
+  background-color: #ff715b; 
+  color: white;
+  display: inline-block;
+  font-size: 15px;
+  height: 43px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: absolute;
+  right: 0;
+}
+
 .container-fluid {
   width: 100%;
   margin-right: auto;
@@ -650,6 +698,7 @@ textarea.input {
     margin-right: auto;
   }
 }
+
 
 .navbar-link::after {
   display: none !important;
@@ -1503,6 +1552,8 @@ body {
 }
 .card.is-horizontal .card-stacked .card-content {
   flex-grow: 1;
+  max-height: 500px;
+  overflow: auto;
 }
 .card.is-fullimage {
   background-color: transparent;

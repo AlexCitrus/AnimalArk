@@ -131,13 +131,15 @@
               <p class="description">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit
               </p>
-              <form>
+              <form action="reg.php" method="POST">
                 <div class="field">
                   <div class="control">
                     <input
                       class="input is-medium"
+                      name = "fname"
                       type="text"
                       placeholder="First Name"
+                      required="required"
                     />
                   </div>
                 </div>
@@ -146,8 +148,10 @@
                   <div class="control">
                     <input
                       class="input is-medium"
+                      name = "lname"
                       type="text"
                       placeholder="Last Name"
+                      required="required"
                     />
                   </div>
                 </div>
@@ -155,8 +159,10 @@
                   <div class="control">
                     <input
                       class="input is-medium"
+                      name = "email"
                       type="email"
                       placeholder="E-mail"
+                      required="required"
                     />
                   </div>
                 </div>
@@ -165,14 +171,17 @@
                   <div class="control">
                     <input
                       class="input is-medium"
+                      name = "pass"
                       type="password"
                       placeholder="Password"
+                      required="required"
                     />
                   </div>
                 </div>
                 <button
                   class="btn is-block is-medium btn-main submitButton mb-2"
-                >
+                  type="submit"
+                  >
                   Submit
                 </button>
                 <button
