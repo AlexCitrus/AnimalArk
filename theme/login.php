@@ -1,7 +1,6 @@
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-session_start();
 $email = ($_POST['email']);
 $pass = ($_POST['pass']);
 $db_name = "id20217626_test";
