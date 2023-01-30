@@ -1,4 +1,5 @@
-<!-- Classes -->
+<?php
+// Classes
 class Product
 {
     private $productId;
@@ -41,19 +42,21 @@ class Item extends Product
 }
 
 
-<!-- Code for add -->
+// Code for add
 
 
 
 
-<!-- Code for retrieval -->
+// Code for retrieval
 
 
 
 
-<!-- Code for update -->
+// Code for update
 
 
 
 
-<!-- Code for delete -->
+// Code for delete
+
+?>
