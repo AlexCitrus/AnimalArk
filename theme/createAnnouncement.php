@@ -4,26 +4,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     //intiializes the variables
     $subject = ($_POST['subject']);
     $description = ($_POST['description']);
-    $date_posted = date('Y-m-d h:i:s');
+    $tempDate = date('Y-m-d h:i:s');
+
+    $month = date("F", strtotime($tempDate));
+    $day = date("d", strtotime($tempDate));
+    $year = date("Y", strtotime($tempDate));
+    $hour = date("h", strtotime($tempDate));
+    $mins = date("i", strtotime($tempDate));
+    $a = date("a", strtotime($tempDate));
+
+    $date_posted = $month . " " . $day . ", " . $year . " " . $hour . ":" . $mins . " " . $a;
 
     $bool = true;
     $db_name = "id20217626_test";
     $db_username = "id20217626_thea";
     $db_pass = "Pass!1234567";
     $db_host = "localhost";
+
     $con = mysqli_connect("$db_host","$db_username","$db_pass", "$db_name") or die(mysqli_error()); //Connect to server
+    
     $query = "SELECT * from announcements";
     $results = mysqli_query($con, $query); //Query the users table
 
     while($row = mysqli_fetch_array($results)) //display all rows from query
     {
+        mysqli_query($con, "DELETE FROM announcements"); // removes the selected data from the database
         $table_announcements = $row['subject']; // the first username row is passed on to $table_users, and so on until the query is finished
-        if($subject == $table_announcements) // checks if there are any matching fields
-        {
-            $bool = false; // sets bool to false
-            Print '<script>alert("Announcement Posted!");</script>'; //Prompts the user
-            Print '<script>window.location.assign("createAnnouncement.html");</script>'; // redirects to register.php
-        }
     }
 
     //adds teh newly inputted user data to the users db

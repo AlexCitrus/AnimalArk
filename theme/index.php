@@ -152,33 +152,21 @@
                 <div class="card-content">
                   <div class="media-content">
                     <p class="title is-1">Announcement</p>
-                    <br />
                   </div>
 
                   <div class="content">
                   <?php
-                    $db_name = "id20217626_test";
-                    $db_username = "id20217626_thea";
-                    $db_pass = "Pass!1234567";
-                    $db_host = "localhost";
-                    $con = mysqli_connect("localhost", "root", "", "usersdb") or die(mysqli_error()); //Connect to server
+                    $con = mysqli_connect("localhost", "id20217626_thea", "Pass!1234567", "id20217626_test") or die(mysqli_error()); //Connect to server
                     $query = mysqli_query($con, "SELECT * FROM announcements"); // SQL Query
+                    
                     while($row = mysqli_fetch_array($query)) // prints the prospects
                     {
-                    echo $row['subject'] . "</br>";
-                    echo $row['description'] . "</br>";
-                    echo $row['date_posted'] . "</br>";
+                    echo "Subject: ";
+                    echo $row['subject'] . "</br>" . "</br>";
+                    echo $row['description'] . "</br>" . "</br>";
+                    echo $row['date_posted'] . "</br>" . "</br>";
                     }
                   ?>
-
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec iaculis mauris. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                    <a href="#">#css</a> <a href="#">#responsive</a>
-                    <br />
-                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
                   </div>
                 </div>
               </div>
