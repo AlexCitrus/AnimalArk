@@ -71,7 +71,7 @@
       <div class="container">
         <nav class="navbar">
           <div class="navbar-brand">
-            <a class="navbar-item mr-5" href="index.html">
+            <a class="navbar-item mr-5" href="index.php">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
             <button
@@ -156,6 +156,21 @@
                   </div>
 
                   <div class="content">
+                  <?php
+                    $db_name = "id20217626_test";
+                    $db_username = "id20217626_thea";
+                    $db_pass = "Pass!1234567";
+                    $db_host = "localhost";
+                    $con = mysqli_connect("localhost", "root", "", "usersdb") or die(mysqli_error()); //Connect to server
+                    $query = mysqli_query($con, "SELECT * FROM announcements"); // SQL Query
+                    while($row = mysqli_fetch_array($query)) // prints the prospects
+                    {
+                    echo $row['subject'] . "</br>";
+                    echo $row['description'] . "</br>";
+                    echo $row['date_posted'] . "</br>";
+                    }
+                  ?>
+
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Phasellus nec iaculis mauris. Lorem ipsum dolor sit amet,
                     consectetur adipiscing elit. Phasellus nec iaculis mauris.

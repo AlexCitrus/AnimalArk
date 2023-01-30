@@ -19,7 +19,7 @@ if($results != "") //IF there are no returning rows or no existing username
     while($row = mysqli_fetch_assoc($results)) //display all rows from query
     {
         $table_users = $row['email']; // the first username row is passed on to $table_users, and so on until the query is finished
-        $table_pass = $rsow['pass']; // the first password row is passed on to $table_users, and so on until the query is finished
+        $table_pass = $row['pass']; // the first password row is passed on to $table_users, and so on until the query is finished
     }
     if(($email == $table_users) && ($pass == $table_pass)) // checks if there are any matching fields
     {

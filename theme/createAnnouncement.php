@@ -4,7 +4,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     //intiializes the variables
     $subject = ($_POST['subject']);
     $description = ($_POST['description']);
-    $date_posted = (now());
+    $date_posted = date('Y-m-d h:i:s');
 
     $bool = true;
     $db_name = "id20217626_test";
