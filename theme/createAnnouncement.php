@@ -18,19 +18,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     while($row = mysqli_fetch_array($results)) //display all rows from query
     {
         $table_announcements = $row['subject']; // the first username row is passed on to $table_users, and so on until the query is finished
-        // if($subject == $table_announcements) // checks if there are any matching fields
-        // {
-        //     $bool = false; // sets bool to false
-        //     Print '<script>alert("Email has already been registered!");</script>'; //Prompts the user
-        //     Print '<script>window.location.assign("createAnnouncement.html");</script>'; // redirects to register.php
-        // }
+        if($subject == $table_announcements) // checks if there are any matching fields
+        {
+            $bool = false; // sets bool to false
+            Print '<script>alert("Announcement Posted!");</script>'; //Prompts the user
+            Print '<script>window.location.assign("createAnnouncement.html");</script>'; // redirects to register.php
+        }
     }
 
     //adds teh newly inputted user data to the users db
     if($bool) // checks if bool is true
     {
-        mysqli_query($con, "INSERT INTO announcements (subject, description, date_posted) VALUES
-        ('$subject', '$description', '$date_posted')"); //Inserts the value to table users
+        mysqli_query($con, "INSERT INTO announcements (subject, date_posted, description) VALUES
+        ('$subject', '$date_posted', '$description')"); //Inserts the value to table users
         Print '<script>alert("Announcement Posted!");</script>'; // Prompts the user
         Print '<script>window.location.assign("createAnnouncement.html");</script>'; // redirects to register.php
     }
