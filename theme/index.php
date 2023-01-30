@@ -25,7 +25,7 @@
 
     <!-- theme meta -->
     <meta name="theme-name" content="orbitor-bulma" />
-
+    <link rel="icon" href =".\images\logopet.png" type = "image/x-icon">
     <title>Animal Ark</title>
 
     <!-- Favicon -->
@@ -89,7 +89,7 @@
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="index.html">Home</a>
+                <a class="navbar-link" href="index.php">Home</a>
               </li>
 
               <li class="navbar-item">
@@ -161,10 +161,10 @@
                     
                     while($row = mysqli_fetch_array($query)) // prints the prospects
                     {
-                    echo "Subject: ";
+                    echo "<b>Subject: </b>";
                     echo $row['subject'] . "</br>" . "</br>";
                     echo $row['description'] . "</br>" . "</br>";
-                    echo $row['date_posted'] . "</br>" . "</br>";
+                    echo $row['date_posted'];
                     }
                   ?>
                   </div>

@@ -3,5 +3,5 @@
 session_start();
 unset($_SESSION['user']);
 session_destroy();  // closes the session
-header('location: index.html'); // redirects to home page 
+header('location: index.php'); // redirects to home page 
 ?>
