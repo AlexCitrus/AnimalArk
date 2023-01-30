@@ -152,7 +152,7 @@ form {
   }
   
   button[type="submit"] {
-	width: 20%;
+	width: auto;
 	padding: 12px 20px;
 	background-color: #ff715b;
 	color: white;
