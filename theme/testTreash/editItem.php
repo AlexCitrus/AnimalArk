@@ -54,8 +54,6 @@ function getItemImageFilename($con, $id)
     } 
 }
 
-// $productId = $itemVariation = $itemPrice = $itemStocks = $itemVisibility = $itemImage = "";
-// $product_id = $variation = $price = $stocks = $visibility = $image = "";
 $item_variation = $item_image = $item_image_filename = $item_price = $item_visibility = "";
 $itemVariation = $itemImage = $itemPrice = $itemVisibility = "";
 $prospectid = $prospectproductid  = $id = $item_stocks = $itemStocks = 0;
