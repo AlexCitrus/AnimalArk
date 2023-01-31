@@ -31,45 +31,6 @@ $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 
     die('Couldn\'t connect: ' . $con->connect_errno());
 
-// if($_SESSION['user'])
-// {
-    // $user = $_SESSION['name'];
-
-    // echo "
-    // <table>
-    // <tr>
-    //     <th>Product Name</th>
-    //     <th>Product Description</th>
-    //     <th>Product Category</th>
-    //     <th>Target Pets</th>
-    //     <th> </th>
-    // </tr>
-    // ";
-
-    // //retrieving products from db
-    // $qry = "SELECT * FROM products";
-    // $result = $con->query($qry);
-    // $numrows = $result->num_rows;
-    // for ($i = 0; $i < $numrows; $i++) 
-    // {
-    //     $row = $result->fetch_assoc();
-    //     extract($row);
-
-    //     echo "
-    //     <tr>
-    //         <td>$name</td>
-    //         <td>$description</td>
-    //         <td>$category</td>
-    //         <td>$intended_for</td>
-    //         <td>
-    //             <a href=\"viewitems.php?id=$id\">View Items</a>
-    //             <a href=\"editproduct.php?id=$id\">Edit Product</a>
-    //             <a href=\"deleteproduct.php?id=$id\">Delete Product</a>
-    //         </td>
-    //     </tr>";
-    // }
-// }
-
 $categories = getCategories($con);
 
 if($_SERVER["REQUEST_METHOD"] == "POST")

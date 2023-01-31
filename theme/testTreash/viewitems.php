@@ -2,7 +2,47 @@
 // session_start();
 ?> -->
 <?php
+function getNumberOfItems($con) 
+{
+    $final_size = 0;
+    $qry = "SELECT * FROM items";
+    $result = $con->query($qry);
+    $numrows = $result->num_rows;
+
+    if($numrows != "" && $numrows != 0)
+    {
+        $final_size = $numrows;
+        return $final_size;
+    }
+
+    return 0;
+}
+
+function getProductId($con)
+{
+    $qry = "SELECT * FROM items";
+    $result = $con->query($qry);
+    $numrows = $result->num_rows;
+
+    if ($numrows != "" && $numrows != 0) 
+    {
+        for ($i = 1; $i <= $numrows; $i++)
+        {
+
+            $row = $result->fetch_assoc();
+            extract($row);
+
+            if($i == $numrows) 
+                return $product_id;
+
+            continue;
+        }
+    }
+}
+
 $productId = $itemVariation = $itemPrice = $itemStocks = $itemVisibility = $itemImage = "";
+$prospectproductid = $product_name = "";
+$items_db_rows = 0;
 
 $host = "localhost";
 $user = "root";
@@ -15,7 +55,8 @@ if($con === false)
 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    // $itemProductId = ;
+
+    $itemProductId = $_POST['id'];
     $itemVariation = $_POST['itemVariation'];
     $itemPrice = $_POST['itemPrice'];
     $itemStocks = $_POST['itemStocks'];
@@ -25,6 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     else
         $itemVisibility = "N";
 
+
     $itemImage = file_get_contents($_FILES["itemImage"]["tmp_name"]);
 
     $qry = "INSERT INTO items (product_id, variation, image, price, stocks, is_visible) VALUES(?, ?, ?, ?, ?, ?)";
@@ -32,16 +74,81 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     if($sql = $con->prepare($qry)) 
     {
         $sql->bind_param("isssis", $param_productId, $param_variation, $param_image, $param_price, $param_stocks, $param_isVisible);
-        $param_productId = $productId;
-        $param_variation = $paramVariation;
+        $param_productId = $itemProductId;
+        $param_variation = $itemVariation;
         $param_image = $itemImage;
         $param_price = $itemPrice;
         $param_stocks = $itemStocks;
         $param_isVisible = $itemVisibility;
-        $sql->execute();
+
+        if ($sql->execute() != "")
+            header("location: viewitems.php");
     }
 
     $sql->close();
+}
+
+else
+{
+    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))) 
+    {
+        $items_db_rows = getNumberOfItems($con);
+
+        $productId = $_GET["id"];
+
+        //retrieves the info to be displayed in the form fields
+        $query = "SELECT * FROM products WHERE id='$productId'";
+        $result = $con->query($query);
+        $numrows = $result->num_rows;
+        
+        if($result != "") 
+        {
+            for($i=0; $i<$numrows; $i++) 
+            {
+                
+                $row = $result->fetch_assoc();
+                extract($row);
+                
+                $prospectproductid = $productId;
+                $product_name = $name;
+
+            }
+            
+        
+        } 
+        
+        else
+            header("location: createproduct.php");
+    }
+
+    else
+    {
+        $items_db_rows = getNumberOfItems($con);
+
+        $productId = getProductId($con);
+
+        //retrieves the info to be displayed in the form fields
+        $query = "SELECT * FROM products WHERE id='$productId'";
+        $result = $con->query($query);
+        $numrows = $result->num_rows;
+        
+        if($result != "") 
+        {
+            for($i=0; $i<$numrows; $i++) 
+            {
+                
+                $row = $result->fetch_assoc();
+                extract($row);
+                
+                $prospectproductid = $productId;
+                $product_name = $name;
+
+            }
+            
+        
+        } 
+    }
+
 }
 ?>
 
@@ -52,8 +159,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     </head>
 
     <body>
+        <a href="createproduct.php">BACK</a>
         <form action="viewitems.php" method="post" enctype="multipart/form-data">
             <table>
+                <tr>
+                    <td>
+    					<input type="hidden" name="id" value="<?php echo $prospectproductid?>">
+    				<td>
+                </tr>
+                <tr>
+                    <td>
+    					<h2>Product: <?php echo "$product_name"; ?></h2>
+    				<td>
+                </tr>
                 <tr>
                     <td>Item Variation:</td>
                     <td><input type="text" name="itemVariation"></td>
@@ -68,12 +186,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 </tr>
                 <tr>
                     <td>Item Stocks:</td>
-                    <td><input type="text" name="itemStocks"></td>
+                    <td><input type="number" name="itemStocks"></td>
                 </tr>
                 <tr>
                     <td>Is Item Visible?</td>
                     <td>
-                        <input type="checkbox" name="isVisible" value="on">
+                        <input type="checkbox" name="itemVisibility" value="on">
                     </td>
                 </tr>
                 <tr>
@@ -81,14 +199,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 </tr>
             </table>
         </form>
-    </body>
-</html>
 
 <?php
+
 echo "
 <table>
 <tr>
-    <th>Product Name</th>
     <th>Item Variation</th>
     <th>Item Image</th>
     <th>Item Price</th>
@@ -99,28 +215,46 @@ echo "
 ";
 
 //retrieving products from db
-$qry = "SELECT * FROM items";
+$qry = "SELECT * FROM items WHERE product_id='$prospectproductid'";
 $result = $con->query($qry);
 $numrows = $result->num_rows;
-for ($i = 0; $i < $numrows; $i++) 
+
+if($numrows != "" && $numrows != 0) 
 {
-    $row = $result->fetch_assoc();
-    extract($row);
-
-    echo "
-    <tr>
-        // <td>$product_id</td>
+    for ($i = 0; $i < $numrows; $i++) 
+    {
+        $row = $result->fetch_assoc();
+        extract($row);
+    
+        if($is_visible != "Y")
+        {
+            echo "
+            <tr style='background-color:gray'>";
+        }
+        else
+            echo "
+            <tr>";
+    
+        echo "
         <td>$variation</td>
-        <td>$image</td>
+        <td>";
+    
+        echo '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" height=200"';
+        
+        echo "
+        </td>
         <td>$price</td>
-        <td>$stocks</td>";
-
-    echo "
-        <td>$is_visible</td>
+        <td>$stocks</td>
         <td>
             <a href=\"edititem.php?id=$id\">Edit Item</a>
             <a href=\"deleteitem.php?id=$id\">Delete Item</a>
         </td>
-    </tr>";
+        </tr>";
+    }
 }
+
+$con->close();
 ?>
+</table>
+</body>
+</html>
