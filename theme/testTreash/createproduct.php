@@ -60,7 +60,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $parameter_intendedFor = $productPetTarget;
 
         if ($sql->execute() != "")
-        header("location: createproduct.php");
+            header("location: createproduct.php");
     }
 
     $sql->close();
