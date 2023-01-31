@@ -6,6 +6,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     $pass = ($_POST['pass']);
     $fname = ($_POST['fname']);
     $lname = ($_POST['lname']);
+    $user_type = "user";
 
     $bool = true;
     $db_name = "id20217626_test";
@@ -23,15 +24,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         {
             $bool = false; // sets bool to false
             Print '<script>alert("Email has already been registered!");</script>'; //Prompts the user
-            Print '<script>window.location.assign("index.php");</script>'; // redirects to register.php
+            Print '<script>window.location.assign("registration.php");</script>'; // redirects to register.php
         }
     }
 
     //adds teh newly inputted user data to the users db
     if($bool) // checks if bool is true
     {
-        mysqli_query($con, "INSERT INTO users (fname, lname, pass, email) VALUES
-        ('$fname', '$lname', '$pass','$email')"); //Inserts the value to table users
+        mysqli_query($con, "INSERT INTO users (fname, lname, pass, email, user_type) VALUES
+        ('$fname', '$lname', '$pass','$email','$user_type')"); //Inserts the value to table users
         Print '<script>alert("Successfully Registered!");</script>'; // Prompts the user
         Print '<script>window.location.assign("login.html");</script>'; // redirects to register.php
     }

@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 
-<!-- iso bear ulit -->
+<?php
+include('./functions.php');
+if (!isLoggedIn()) {
+	$_SESSION['msg'] = "You must log in first";
+	header('location: login.html');
+}
+?>
+
 <html lang="zxx">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
