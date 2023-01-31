@@ -2,22 +2,6 @@
 // session_start();
 ?> -->
 <?php
-function getNumberOfItems($con) 
-{
-    $final_size = 0;
-    $qry = "SELECT * FROM items";
-    $result = $con->query($qry);
-    $numrows = $result->num_rows;
-
-    if($numrows != "" && $numrows != 0)
-    {
-        $final_size = $numrows;
-        return $final_size;
-    }
-
-    return 0;
-}
-
 function getProductId($con)
 {
     $qry = "SELECT * FROM items";
@@ -53,104 +37,29 @@ $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 
     die('Couldn\'t connect: ' . $con->connect_errno());
 
-if($_SERVER["REQUEST_METHOD"] == "POST")
+$items_db_rows = getNumberOfItems($con);
+
+$productId = $_GET["id"];
+
+//retrieves the info to be displayed in the form fields
+$query = "SELECT * FROM products WHERE id='$productId'";
+$result = $con->query($query);
+$numrows = $result->num_rows;
+
+if($result != "") 
 {
-
-    $itemProductId = $_POST['id'];
-    $itemVariation = $_POST['itemVariation'];
-    $itemPrice = $_POST['itemPrice'];
-    $itemStocks = $_POST['itemStocks'];
-    
-    if($_POST['itemVisibility'] == "on")
-        $itemVisibility = "Y";
-    else
-        $itemVisibility = "N";
-
-    $itemImage = file_get_contents($_FILES["itemImage"]["tmp_name"]);
-    $itemImageFilename = $_FILES["itemImage"]["name"];
-
-    $qry = "INSERT INTO items (product_id, variation, image, image_filename, price, stocks, is_visible) VALUES(?, ?, ?, ?, ?, ?, ?)";
-
-    if($sql = $con->prepare($qry)) 
+    for($i=0; $i<$numrows; $i++) 
     {
-        $sql->bind_param("issssis", $param_productId, $param_variation, $param_image, $param_imageFilename, $param_price, $param_stocks, $param_isVisible);
-        $param_productId = $itemProductId;
-        $param_variation = $itemVariation;
-        $param_image = $itemImage;
-        $param_imageFilename = $itemImageFilename;
-        $param_price = $itemPrice;
-        $param_stocks = $itemStocks;
-        $param_isVisible = $itemVisibility;
-
-        if ($sql->execute() != "")
-            header("location: viewitems.php");
+        $row = $result->fetch_assoc();
+        extract($row);
+        
+        $prospectproductid = $productId;
+        $product_name = $name;
     }
-
-    $sql->close();
-}
+} 
 
 else
-{
-    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))) 
-    {
-        $items_db_rows = getNumberOfItems($con);
-
-        $productId = $_GET["id"];
-
-        //retrieves the info to be displayed in the form fields
-        $query = "SELECT * FROM products WHERE id='$productId'";
-        $result = $con->query($query);
-        $numrows = $result->num_rows;
-        
-        if($result != "") 
-        {
-            for($i=0; $i<$numrows; $i++) 
-            {
-                
-                $row = $result->fetch_assoc();
-                extract($row);
-                
-                $prospectproductid = $productId;
-                $product_name = $name;
-
-            }
-            
-        
-        } 
-        
-        else
-            header("location: createproduct.php");
-    }
-
-    else
-    {
-        $items_db_rows = getNumberOfItems($con);
-
-        $productId = getProductId($con);
-
-        //retrieves the info to be displayed in the form fields
-        $query = "SELECT * FROM products WHERE id='$productId'";
-        $result = $con->query($query);
-        $numrows = $result->num_rows;
-        
-        if($result != "") 
-        {
-            for($i=0; $i<$numrows; $i++) 
-            {
-                
-                $row = $result->fetch_assoc();
-                extract($row);
-                
-                $prospectproductid = $productId;
-                $product_name = $name;
-
-            }
-            
-        
-        } 
-    }
-
-}
+    header("location: createproduct.php");
 ?>
 
 <!DOCTYPE html>
@@ -161,13 +70,8 @@ else
 
     <body>
         <a href="createproduct.php">BACK</a>
-        <form action="viewitems.php" method="post" enctype="multipart/form-data">
+        <form action="viewallitems.php" method="post" enctype="multipart/form-data">
             <table>
-                <tr>
-                    <td>
-    					<input type="hidden" name="id" value="<?php echo $prospectproductid?>">
-    				<td>
-                </tr>
                 <tr>
                     <td>
     					<h2>Product: <?php echo "$product_name"; ?></h2>

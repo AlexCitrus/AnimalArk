@@ -24,7 +24,7 @@ $prospectid = $prospectproductid  = $id = $item_stocks = $itemStocks = 0;
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "project";
+$db = "animalark_db";
 
 $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 

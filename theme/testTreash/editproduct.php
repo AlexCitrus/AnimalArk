@@ -23,7 +23,7 @@ $categories = array();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "project";
+$db = "animalark_db";
 
 $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 

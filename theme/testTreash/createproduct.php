@@ -25,7 +25,7 @@ $categories = array();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "project";
+$db = "animalark_db";
 
 $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 
@@ -74,6 +74,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     </head>
 
     <body>
+        <a href="viewallitems.php">VIEW ALL ITEMS</a>
         <form action="" method="post">
             <table>
                 <tr>
