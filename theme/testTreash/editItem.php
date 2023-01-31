@@ -18,6 +18,42 @@ function getProductName($con, $product_id)
     } 
 }
 
+function getItemImage($con, $id)
+{
+    $query = "SELECT * FROM items WHERE id='$id'";
+    $result = $con->query($query);
+    $numrows = $result->num_rows;
+    
+    if($result != "") 
+    {
+        for($i=0; $i<$numrows; $i++) 
+        {
+            $row = $result->fetch_assoc();
+            extract($row);
+
+            return $image;
+        }
+    } 
+}
+
+function getItemImageFilename($con, $id)
+{
+    $query = "SELECT * FROM items WHERE id='$id'";
+    $result = $con->query($query);
+    $numrows = $result->num_rows;
+    
+    if($result != "") 
+    {
+        for($i=0; $i<$numrows; $i++) 
+        {
+            $row = $result->fetch_assoc();
+            extract($row);
+
+            return $image_filename;
+        }
+    } 
+}
+
 // $productId = $itemVariation = $itemPrice = $itemStocks = $itemVisibility = $itemImage = "";
 // $product_id = $variation = $price = $stocks = $visibility = $image = "";
 $item_variation = $item_image = $item_image_filename = $item_price = $item_visibility = "";
@@ -36,6 +72,8 @@ if($con === false)
 if(isset($_POST["id"]) && !empty($_POST["id"]))
 {
     echo "debug";
+    echo $item_image_filename;
+
     $itemId = $_POST['id'];
     $itemVariation = $_POST['itemVariation'];
     $itemPrice = $_POST['itemPrice'];
@@ -48,71 +86,50 @@ if(isset($_POST["id"]) && !empty($_POST["id"]))
     else
         $itemVisibility = "N";
 
-    echo $_FILES["itemImage"]["name"];
-
-    if ($_FILES["itemImage"]["name"] != "") 
+    // if($_FILES['itemImage']['error'] > 0)
+    if(empty($_FILES['itemImage']))
     {
-        echo $_FILES["itemImage"]["name"];
-        echo "if clause";
-        $itemImage = $item_image;
-        $itemImageFilename = $item_image_filename;
+        echo "empty file";
 
-        echo "before query";
-        //updates the db
-        $qry = "UPDATE items SET variation=?, image=?, image_filename=?, price=?, stocks=?, is_visible=? WHERE id=?";
-
-        echo $qry;
-        if ($sql = $con->prepare($qry)) {
-            echo "test";
-            $sql->bind_param("ssssisi", $param_variation, $param_image, $param_image_filename, $param_price, $param_stocks, $param_visibility, $param_id);
-
-            $param_variation = $itemVariation;
-            $param_image = $itemImage;
-            $param_image_filename = $itemImageFilename;
-            $param_price = $itemPrice;
-            $param_stocks = $itemStocks;
-            $param_visibility = $itemVisibility;
-            $param_id = $itemId;
-
-            if ($sql->execute())
-                header("location: viewitems.php");
-            else
-                echo "Oops! Something went wrong. Please try again later.";
-
-        }
-        $sql->close();
+        $itemImage = getItemImage($con, $itemId);
+        $itemImageFilename = getItemImageFilename($con, $itemId);
     }
 
     else
     {
-        echo $_FILES["itemImage"]["name"];
-        echo "else clause";
+        echo "file is not empty";
         $itemImage = file_get_contents($_FILES["itemImage"]["tmp_name"]);
+        echo "after file_get_contents";
         $itemImageFilename = $_FILES["itemImage"]["name"];
-        echo "before query";
-        //updates the db
-        $qry = "UPDATE items SET variation=?, price=?, stocks=?, is_visible=? WHERE id=?";
 
-        echo $qry;
-        if ($sql = $con->prepare($qry)) {
-            echo "test";
-            $sql->bind_param("ssisi", $param_variation, $param_price, $param_stocks, $param_visibility, $param_id);
-
-            $param_variation = $itemVariation;
-            $param_price = $itemPrice;
-            $param_stocks = $itemStocks;
-            $param_visibility = $itemVisibility;
-            $param_id = $itemId;
-
-            if ($sql->execute())
-                // header("location: viewitems.php");
-                echo "no pic changed";
-            else
-                echo "Oops! Something went wrong. Please try again later.";
-
-        }
-        $sql->close();
     }
+
+    echo $itemImageFilename;
+
+    echo "before query";
+    //updates the db
+    $qry = "UPDATE items SET variation=?, image=?, image_filename=?, price=?, stocks=?, is_visible=? WHERE id=?";
+
+    echo $qry;
+    if ($sql = $con->prepare($qry)) {
+        echo "test";
+        $sql->bind_param("ssssisi", $param_variation, $param_image, $param_image_filename, $param_price, $param_stocks, $param_visibility, $param_id);
+
+        $param_variation = $itemVariation;
+        $param_image = $itemImage;
+        $param_image_filename = $itemImageFilename;
+        $param_price = $itemPrice;
+        $param_stocks = $itemStocks;
+        $param_visibility = $itemVisibility;
+        $param_id = $itemId;
+
+        if ($sql->execute())
+            header("location: viewitems.php");
+        else
+            echo "Oops! Something went wrong. Please try again later.";
+
+    }
+    $sql->close();
     
 } 
 
@@ -164,7 +181,7 @@ else
     </head>
 
     <body>
-        <form action="editItem.php" method="post">
+        <form action="editItem.php" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td>
