@@ -40,7 +40,7 @@ function getProductId($con)
     }
 }
 
-$productId = $itemVariation = $itemPrice = $itemStocks = $itemVisibility = $itemImage = "";
+$productId = $itemVariation = $itemPrice = $itemStocks = $itemVisibility = $itemImage = $itemImageFilename = "";
 $prospectproductid = $product_name = "";
 $items_db_rows = 0;
 
@@ -66,17 +66,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     else
         $itemVisibility = "N";
 
-
     $itemImage = file_get_contents($_FILES["itemImage"]["tmp_name"]);
+    $itemImageFilename = $_FILES["itemImage"]["name"];
 
-    $qry = "INSERT INTO items (product_id, variation, image, price, stocks, is_visible) VALUES(?, ?, ?, ?, ?, ?)";
+    $qry = "INSERT INTO items (product_id, variation, image, image_filename, price, stocks, is_visible) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
     if($sql = $con->prepare($qry)) 
     {
-        $sql->bind_param("isssis", $param_productId, $param_variation, $param_image, $param_price, $param_stocks, $param_isVisible);
+        $sql->bind_param("issssis", $param_productId, $param_variation, $param_image, $param_imageFilename, $param_price, $param_stocks, $param_isVisible);
         $param_productId = $itemProductId;
         $param_variation = $itemVariation;
         $param_image = $itemImage;
+        $param_imageFilename = $itemImageFilename;
         $param_price = $itemPrice;
         $param_stocks = $itemStocks;
         $param_isVisible = $itemVisibility;
@@ -246,8 +247,8 @@ if($numrows != "" && $numrows != 0)
         <td>$price</td>
         <td>$stocks</td>
         <td>
-            <a href=\"edititem.php?id=$id\">Edit Item</a>
-            <a href=\"deleteitem.php?id=$id\">Delete Item</a>
+            <a href=\"editItem.php?id=$id\">Edit Item</a>
+            <a href=\"deleteItem.php?id=$id\">Delete Item</a>
         </td>
         </tr>";
     }
