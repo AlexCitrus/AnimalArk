@@ -1,11 +1,237 @@
 <!DOCTYPE html>
 
+<!-- <?php
+// include('./functions.php');
+// if (!isLoggedIn()) {
+// 	$_SESSION['msg'] = "You must log in first";
+// 	header('location: login.html');
+// }
+?> -->
+
 <?php
-include('./functions.php');
-if (!isLoggedIn()) {
-	$_SESSION['msg'] = "You must log in first";
-	header('location: login.html');
+class Product 
+{
+  public $productId;
+  public $productName;
+  public $category;
+  public $intendedFor;
+  public $description;
+  public $variations;
+
+  function __construct($productId, $productName, $category, $intendedFor, $description, $variations)
+  {
+    $this->productId = $productId;
+    $this->productName = $productName;
+    $this->category = $category;
+    $this->intendedFor = $intendedFor;
+    $this->description = $description;
+    $this->variations = $variations;
+  }
 }
+
+class Item
+{
+  public $itemId;
+  public $itemVariation;
+  public $itemImage;
+  public $itemPrice;
+  public $itemStocks;
+
+  function __construct($itemId, $itemVariation, $itemImage, $itemPrice, $itemStocks) 
+  {
+    $this->itemId = $itemId;
+    $this->itemVariation = $itemVariation;
+    $this->itemImage = $itemImage;
+    $this->itemPrice = $itemPrice;
+    $this->itemStocks = $itemStocks;
+  }
+}
+function displayProduct($product, $all)
+{
+  $productName = $product->productName;
+  $variations = $product->variations;
+
+  if($all) 
+  {
+    $item = $variations[0];
+    $itemVariation = $item->itemVariation;
+    $itemImage = $item->itemImage;
+    $itemPrice = $item->itemPrice;
+    $itemStocks = $item->itemStocks;
+
+    echo "
+      <div class=\"col-sm-4\">
+      <div class=\"product-image-wrapper\">
+        <div class=\"single-products\">
+          <div class=\"productinfo text-center\">";
+    echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
+    echo "
+            <h2>₱ $itemPrice</h2>
+            <p>$productName</p>
+          </div>
+          <div class=\"product-overlay\">
+            <div class=\"overlay-content\">
+              <h2>In Stock: </h2>
+              <p>$itemStocks</p>
+              <a href=\"cust_proddetails.html\" class=\"btn btn-default add-to-cart\"></i>View</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    ";
+  }
+
+  else
+  {
+    for ($i = 0; $i < sizeof($variations); $i++) {
+      $item = $variations[$i];
+
+      $itemVariation = $item->itemVariation;
+      $itemImage = $item->itemImage;
+      $itemPrice = $item->itemPrice;
+      $itemStocks = $item->itemStocks;
+  
+      echo "
+        <div class=\"col-sm-4\">
+        <div class=\"product-image-wrapper\">
+          <div class=\"single-products\">
+            <div class=\"productinfo text-center\">";
+      echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
+      echo "
+              <h2>₱ $itemPrice</h2>
+              <p>$productName</p>
+            </div>
+            <div class=\"product-overlay\">
+              <div class=\"overlay-content\">
+                <h2>In Stock: </h2>
+                <p>$itemStocks</p>
+                <a href=\"cust_proddetails.html\" class=\"btn btn-default add-to-cart\"></i>View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      ";
+    }
+  }
+}
+
+function getProducts($con, $category)
+{
+  // OK NA
+  $products = array();
+  $variations = array();
+
+  $qry = "SELECT * FROM products WHERE category_id='$category'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+
+        $row = $result->fetch_assoc();
+        extract($row);
+        $category = getCategory($con, $category_id);
+        $variations = getItems($con, $id);
+
+        $product = new Product($id, $name, $category, $intended_for, $description, $variations);
+
+        array_push($products, $product);
+      }
+  }
+
+  return $products;
+}
+
+function getCategory($con, $category_id)
+{
+  // OK NA
+  $qry = "SELECT * FROM categories WHERE id='$category_id'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+
+        $row = $result->fetch_assoc();
+        extract($row);
+
+        return $category;
+      }
+  }
+}
+
+function getItems($con, $product_id)
+{
+  // OK NA
+  $items = array();
+
+  $qry = "SELECT * FROM items WHERE product_id='$product_id' AND is_visible='Y'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+  
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+        $row = $result->fetch_assoc();
+        extract($row);
+
+        $item = new Item($id, $variation, $image, $price, $stocks);
+        array_push($items, $item);
+      }
+  }
+
+  return $items;
+}
+
+function getItem($con, $item_id)
+{
+  $qry = "SELECT * FROM items WHERE id='$item_id'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+        $item = $result->fetch_assoc();
+        return $item;
+      }
+  }
+}
+
+function getProduct($con, $item)
+{
+  extract($item);
+
+  $qry = "SELECT * FROM products WHERE id='$product_id'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+        $product = $result->fetch_assoc();
+        return $product;
+      }
+  }
+}
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "animalark_db";
+
+$con = new mysqli($host, $user, $pass, $db);
+if($con === false) 
+    die('Couldn\'t connect: ' . $con->connect_errno());
 ?>
 
 <html lang="zxx">
@@ -94,7 +320,6 @@ if (!isLoggedIn()) {
               </li>
             </ul>
             <ul class="navbar-end ml-0">
-              
               <li class="navbar-item">
                 <a href="logout.php" class="btn btn-solid-border"
                   >Log-out <i class="fa fa-angle-right ml-2"></i
@@ -143,9 +368,10 @@ if (!isLoggedIn()) {
                   <div id="sportswear" class="panel-collapse collapse">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="">Cat Food </a></li>
-                        <li><a href="">Cat Care and Health Supplies</a></li>
-                        <li><a href="">Treats </a></li>
+                        <li><a href="">Cat Food and Treats</a></li>
+                        <li><a href="">Cat Vitamins</a></li>
+                        <li><a href="">Cat Medication and Others</a></li>
+                        <li><a href="">Cat Shampoo and Soap</a></li>
                       </ul>
                     </div>
                   </div>
@@ -162,10 +388,10 @@ if (!isLoggedIn()) {
                   <div id="mens" class="panel-collapse collapse">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="">Dog Food</a></li>
-                        <li><a href="">Dog Care and Health Supplies</a></li>
-                        <li><a href="">Treats</a></li>
-
+                        <li><a href="">Dog Food and Treats</a></li>
+                        <li><a href="">Dog Vitamins</a></li>
+                        <li><a href="">Dog Medication and Others</a></li>
+                        <li><a href="">Dog Shampoo and Soap</a></li>
                       </ul>
                     </div>
                   </div>
@@ -181,6 +407,42 @@ if (!isLoggedIn()) {
             <div class="features_items"><!--features_items-->
               <h2 class="title text-center">All Products</h2>
               
+              <!-- DISPLAYING PRODUCTS -->
+
+              <?php
+              // ALL PRODUCTS
+                $categories = array(1, 2, 3, 4, 5);
+                $products_per_category = array();
+                foreach($categories as $category)
+                {
+                  $products_per_category = getProducts($con, $category);
+
+                  foreach($products_per_category as $product)
+                  {
+                    displayProduct($product, false);
+                  }
+                }
+              ?>
+              
+              <!-- <div class="col-sm-4">
+                <div class="product-image-wrapper">
+                  <div class="single-products">
+                    <div class="productinfo text-center">
+                      <img src="images/shop/product12.jpg" alt="" />
+                      <h2>₱ 56</h2>
+                      <p>Item</p>
+                    </div>
+                    <div class="product-overlay">
+                      <div class="overlay-content">
+                        <h2>In Stock: </h2>
+                        <p>123</p>
+                        <a href="cust_proddetails.html" class="btn btn-default add-to-cart"></i>View</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               
               <div class="col-sm-4">
                 <div class="product-image-wrapper">
@@ -201,26 +463,6 @@ if (!isLoggedIn()) {
                 </div>
               </div>
 
-              
-              <div class="col-sm-4">
-                <div class="product-image-wrapper">
-                  <div class="single-products">
-                    <div class="productinfo text-center">
-                      <img src="images/shop/product12.jpg" alt="" />
-                      <h2>₱ 56</h2>
-                      <p>Item</p>
-                    </div>
-                    <div class="product-overlay">
-                      <div class="overlay-content">
-                        <h2>In Stock: </h2>
-                        <p>123</p>
-                        <a href="cust_proddetails.html" class="btn btn-default add-to-cart"></i>View</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
 
               <div class="col-sm-4">
                 <div class="product-image-wrapper">
@@ -296,7 +538,7 @@ if (!isLoggedIn()) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               
 
               

@@ -240,7 +240,7 @@ if($numrows != "" && $numrows != 0)
         <td>$variation</td>
         <td>";
     
-        echo '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" height=200"';
+        echo '<img src="data:image/jpeg;base64,' . base64_encode($image) . '" height=200"/>';
         
         echo "
         </td>
