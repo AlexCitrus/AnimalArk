@@ -99,7 +99,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"]))
         $itemImage = file_get_contents($_FILES["itemImage"]["tmp_name"]);
         echo "after file_get_contents";
         $itemImageFilename = $_FILES["itemImage"]["name"];
-
+        
     }
 
     echo $itemImageFilename;

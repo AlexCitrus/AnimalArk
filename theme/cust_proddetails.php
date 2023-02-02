@@ -427,13 +427,13 @@ if($con === false)
                                 </div>
                             </div>
     
-                          <!-- Controls -->
+                          <!-- Controls
                           <a class="left item-control" href="#similar-product" data-slide="prev">
                             <i class="fa fa-angle-left"></i>
                           </a>
                           <a class="right item-control" href="#similar-product" data-slide="next">
                             <i class="fa fa-angle-right"></i>
-                          </a>
+                          </a> -->
                     </div>
     
                 </div>
