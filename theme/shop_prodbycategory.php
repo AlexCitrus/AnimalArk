@@ -71,7 +71,7 @@ function displayProduct($product, $all, $forNavigation)
       <div class=\"product-image-wrapper\">
         <div class=\"single-products\">
           <div class=\"productinfo text-center\">";
-    echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
+    echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>';
     echo "
             <h2>₱ $itemPrice</h2>
             <p>$truncatedProductName</p>

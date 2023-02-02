@@ -1,11 +1,11 @@
-<?php
-session_start();
-include('functions.php');
-if (!isLoggedIn()) {
-  Print '<script>window.location.assign("login.html");</script>';
-}
+<!-- <?php
+// session_start();
+// include('functions.php');
+// if (!isLoggedIn()) {
+//   Print '<script>window.location.assign("login.html");</script>';
+// }
 
-?>
+?> -->
 
 <?php
 class Product 
@@ -229,14 +229,23 @@ function getItems($con, $product_id)
 //   }
 // }
 
-$db_name = "id20237149_animalark_db";
-$db_username = "id20237149_animalark";
-$db_pass = "P@ssw0rd!123";
-$db_host = "localhost";
+// $db_name = "id20237149_animalark_db";
+// $db_username = "id20237149_animalark";
+// $db_pass = "P@ssw0rd!123";
+// $db_host = "localhost";
 
-$con = new mysqli($db_host, $db_username, $db_pass, $db_name);
+// $con = new mysqli($db_host, $db_username, $db_pass, $db_name);
+// if($con === false) 
+//     die('Couldn\'t connect: ' . $con->connect_errno());
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "animalark_db";
+
+$con = new mysqli($host, $user, $pass, $db);
 if($con === false) 
-    die('Couldn\'t connect: ' . $con->connect_errno());
+  die('Couldn\'t connect: ' . $con->connect_errno());
 
 $forNavigation = "All Products";
 ?>

@@ -153,7 +153,7 @@ function getProduct($con, $product_id)
     }
 }
 
-function displayProductVariations($product, $itemId, $forNavigation) 
+function displayProductVariations($product, $forNavigation) 
 {
   $items = $product->variations;
   $product_id = $product->productId;
@@ -175,6 +175,10 @@ function displayProductVariations($product, $itemId, $forNavigation)
   }
 }
 
+function imageDisplay($image) {
+  echo '<img src="data:image/jpeg;base64,' . base64_encode($image) . '"/>';
+}
+
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -187,11 +191,8 @@ if($con === false)
 // if(isset($_GET["category_id"]) && !empty(trim($_GET["category_id"])))
 // {
     $productId = $_GET['id'];
-    echo $productId;
     $itemId = $_GET['item_id'];
-    echo $itemId;
     $forNavigation = $_GET['navigation'];
-    echo $forNavigation;
 // }
 ?>
 
@@ -410,39 +411,29 @@ if($con === false)
             <div class="product-details"><!--product-details-->
                 <div class="col-sm-5" style="margin-top: 30px; margin-bottom: 30px; ">
                     <div class="view-product" style="margin-left: 20px;">
-                    <img src="data:image/jpeg;base64, <?php echo base64_encode($image); ?>"/>
+                    <!-- <img src="data:image/jpeg;base64, <?php echo base64_encode($image); ?>"/> -->
+                    <?php
+                    imageDisplay($image);
+                    ?>
                     </div>
                     <div id="similar-product" class="carousel slide" data-ride="carousel" style="margin-left: 10px;">
                         
                           <!-- Wrapper for slides -->
                             <div class="carousel-inner">
                                 <div class="item active">
-                                  <a href="">
-                                  <img src="data:image/jpeg;base64, <?php echo base64_encode($image); ?>" height="85" width="85"/>
-                                  </a>
-                                  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+                                  <?php
+                                  displayProductVariations($product, $forNavigation);
+                                  ?>
                                 </div>
-                                <div class="item">
-                                  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                </div>
-                                <div class="item">
-                                  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                </div>
-                                
                             </div>
     
-                          <!-- Controls -->
+                          <!-- Controls
                           <a class="left item-control" href="#similar-product" data-slide="prev">
                             <i class="fa fa-angle-left"></i>
                           </a>
                           <a class="right item-control" href="#similar-product" data-slide="next">
                             <i class="fa fa-angle-right"></i>
-                          </a>
+                          </a> -->
                     </div>
     
                 </div>
