@@ -453,8 +453,9 @@ $forNavigation = "All Products";
                 <h3>Animal Ark</h3>
               </div>
               <p>
-                Tempora dolorem voluptatum nam vero assumenda voluptate, facilis
-                ad eos obcaecati tenetur veritatis eveniet distinctio.
+                Animal Ark Pet Care Center is a one-stop shop for all your pet needs.
+                We offer a wide variety of pet supplies as well as a full range of services
+                veterinary care.
               </p>
             </div>
           </div>
@@ -463,10 +464,7 @@ $forNavigation = "All Products";
               <h4 class="is-capitalize mb-4">Company</h4>
 
               <ul class="list-unstyled footer-menu lh-35">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Contact</a></li>
+                <a href="#">About</a>
               </ul>
             </div>
           </div>
@@ -475,10 +473,7 @@ $forNavigation = "All Products";
               <h4 class="is-capitalize mb-4">Support</h4>
 
               <ul class="list-unstyled footer-menu lh-35">
-                <li><a href="#">Terms & Conditions</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">FAQ</a></li>
+                <li><a href="FAQs.html">FAQ</a></li>
               </ul>
             </div>
           </div>
@@ -486,30 +481,16 @@ $forNavigation = "All Products";
             <div class="widget widget-contact">
               <h4 class="is-capitalize mb-4">Get in Touch</h4>
               <h6>
-                <a href="tel:+23-345-67890">
-                  <i class="ti-headphone-alt mr-3"></i>Support@megakit.com</a
-                >
-              </h6>
-              <h6>
-                <a href="mailto:support@gmail.com">
-                  <i class="ti-mobile mr-3"></i>+23-456-6588</a
+                <a href="animalarkpetcenter@gmail.com">
+                  <i class="ti-headphone-alt mr-3"></i>animalarkpetcenter@gmail.com</a
                 >
               </h6>
 
+
               <ul class="list-inline footer-socials mt-5">
                 <li class="list-inline-item">
-                  <a href="https://www.facebook.com/themefisher"
+                  <a href="https://www.facebook.com/animalarkpetcarecenter"
                     ><i class="ti-facebook mr-2"></i
-                  ></a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="https://twitter.com/themefisher"
-                    ><i class="ti-twitter mr-2"></i
-                  ></a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="https://www.pinterest.com/themefisher/"
-                    ><i class="ti-linkedin mr-2"></i
                   ></a>
                 </li>
               </ul>
@@ -524,7 +505,7 @@ $forNavigation = "All Products";
                 &copy; Copyright Reserved to
                 <span class="text-color">Animal Ark</span> by
                 <a href="https://themefisher.com/" target="_blank"
-                  >Cheska Mylabs</a
+                  >Kenya</a
                 >
               </div>
             </div>
