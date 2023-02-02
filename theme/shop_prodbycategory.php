@@ -9,12 +9,6 @@
 ?> -->
 
 <?php
-<<<<<<< HEAD
-include('./functions.php');
-if (!isLoggedIn()) {
-	$_SESSION['msg'] = "You must log in first";
-  print '<script>window.location.assign("login.html");</script>'; // redirects to login.php
-=======
 class Product 
 {
   public $productId;
@@ -33,7 +27,6 @@ class Product
     $this->description = $description;
     $this->variations = $variations;
   }
->>>>>>> 64220e4a50409576d5dac138355213a7bbab7f0b
 }
 
 class Item
@@ -55,8 +48,8 @@ class Item
 }
 function displayProduct($product, $all, $forNavigation)
 {
-  $productId = $product->productId;
   $productName = $product->productName;
+  $productId = $product->productId;
   $variations = $product->variations;
 
   if($all) 
@@ -82,7 +75,7 @@ function displayProduct($product, $all, $forNavigation)
             <div class=\"overlay-content\">
               <h2>In Stock: </h2>
               <p>$itemStocks</p>
-              <a href=\"cust_proddetails.php?id=$productId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
+              <a href=\"cust_proddetails.php?id=$productId&item_id=$itemId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
             </div>
           </div>
         </div>
@@ -116,7 +109,7 @@ function displayProduct($product, $all, $forNavigation)
               <div class=\"overlay-content\">
                 <h2>In Stock: </h2>
                 <p>$itemStocks</p>
-                <a href=\"cust_proddetails.php?id=$productId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
+                <a href=\"cust_proddetails.php?id=$itemId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
               </div>
             </div>
           </div>
@@ -127,13 +120,20 @@ function displayProduct($product, $all, $forNavigation)
   }
 }
 
-function getProducts($con, $category)
+function getProducts($con, $category, $intendedFor)
 {
-  // OK NA
+  
   $products = array();
   $variations = array();
+  $groupingCondition = "";
 
-  $qry = "SELECT * FROM products WHERE category_id='$category'";
+  if ($intendedFor == 'C')
+    $groupingCondition = "intended_for LIKE 'C%'";
+  else
+    $groupingCondition = "(intended_for LIKE 'D' OR intended_for LIKE '%D')";
+  
+
+  $qry = "SELECT * FROM products WHERE category_id='$category' AND $groupingCondition";
   $result = $con->query($qry);
   $numrows = $result->num_rows;
 
@@ -158,7 +158,6 @@ function getProducts($con, $category)
 
 function getCategory($con, $category_id)
 {
-  // OK NA
   $qry = "SELECT * FROM categories WHERE id='$category_id'";
   $result = $con->query($qry);
   $numrows = $result->num_rows;
@@ -178,7 +177,6 @@ function getCategory($con, $category_id)
 
 function getItems($con, $product_id)
 {
-  // OK NA
   $items = array();
 
   $qry = "SELECT * FROM items WHERE product_id='$product_id' AND is_visible='Y'";
@@ -216,8 +214,10 @@ function getItems($con, $product_id)
 //   }
 // }
 
-// function getProduct($con, $product_id)
+// function getProduct($con, $item)
 // {
+//   extract($item);
+
 //   $qry = "SELECT * FROM products WHERE id='$product_id'";
 //   $result = $con->query($qry);
 //   $numrows = $result->num_rows;
@@ -241,7 +241,27 @@ $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 
     die('Couldn\'t connect: ' . $con->connect_errno());
 
-$forNavigation = "All Products";
+// if(isset($_GET["category_id"]) && !empty(trim($_GET["category_id"])))
+// {
+  $chosenCategory = $_GET['category_id'];
+  $grouping = $_GET['intendedFor'];
+// }
+
+if ($chosenCategory == 3)
+  $category_name = "Shampoo and Soap";
+else
+  $category_name = getCategory($con, $chosenCategory);
+
+if ($grouping == 'C') 
+{
+  $pageTitle = "CAT " . $category_name;
+  $forNavigation = "Cat Shop-$category_name";
+} 
+else 
+{
+  $pageTitle = "DOG " . $category_name;
+  $forNavigation = "Dog Shop-$category_name";
+}
 ?>
 
 <html lang="zxx">
@@ -363,46 +383,49 @@ $forNavigation = "All Products";
       <div class="container">
         <div class="row">
           <div class="col-sm-3">
-          <div class="left-sidebar">
+            <div class="left-sidebar">
               <h2>Category</h2>
-
               <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="accordian" href="#sportswear">
+                      <a href="cust_shop.php">All Products</a>
+                    </h4>
+                    <br/>
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                         Cat Shop
                       </a>
                     </h4>
                   </div>
-                  <div id="sportswear" class="panel-collapse collapse in">
+                  <div id="sportswear" class="panel-collapse collapse">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="">Cat Food </a></li>
-                        <li><a href="">Cat Care and Health Supplies</a></li>
-                        <li><a href="">Treats </a></li>
+                      <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=C">Cat Food and Treats</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=5&intendedFor=C">Cat Vitamins</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=2&intendedFor=C">Cat Medications and Others</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=3&intendedFor=C">Cat Shampoo and Soap</a></li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="accordian" href="#mens">
+                      <a data-toggle="collapse" data-parent="#accordian" href="#mens">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                         Dog Shop
                       </a>
                     </h4>
                   </div>
-                  <div id="mens" class="panel-collapse collapse in">
+                  <div id="mens" class="panel-collapse collapse">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="">Dog Food</a></li>
-                        <li><a href="">Dog Care and Health Supplies</a></li>
-                        <li><a href="">Treats</a></li>
-
+                      <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=D">Dog Food and Treats</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=5&intendedFor=D">Dog Vitamins</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=2&intendedFor=D">Dog Medications and Others</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=3&intendedFor=D">Dog Shampoo and Soap</a></li>
                       </ul>
                     </div>
                   </div>
@@ -416,24 +439,38 @@ $forNavigation = "All Products";
           
           <div class="col-sm-9 padding-right">
             <div class="features_items"><!--features_items-->
-              <h2 class="title text-center">All Products</h2>
+              <h2 class="title text-center"><?php echo $pageTitle; ?></h2>
               
               <!-- DISPLAYING PRODUCTS -->
 
               <?php
-              // ALL PRODUCTS
-                $categories = array(1, 2, 3, 4, 5);
-                $products_per_category = array();
-                foreach($categories as $category)
+              $categories = array(1, 2, 5);
+              $products_per_category = array();
+              if (in_array($chosenCategory, $categories)) 
+              {
+                $products_per_category = getProducts($con, $chosenCategory, $grouping);
+
+                foreach ($products_per_category as $product) {
+                  displayProduct($product, true, $forNavigation);
+                }
+              }
+
+              else
+              {
+                $prospectCategories = array(3, 4);
+                foreach($prospectCategories as $chosenCategory)
                 {
-                  $products_per_category = getProducts($con, $category);
-                  
+                  $products_per_category = getProducts($con, $chosenCategory, $grouping);
+
                   foreach($products_per_category as $product)
                   {
                     displayProduct($product, true, $forNavigation);
                   }
                 }
+              }
               ?>
+              
+
               
               <ul class="pagination">
                 <li class="active"><a href="">1</a></li>
@@ -447,76 +484,76 @@ $forNavigation = "All Products";
       </div>
     </section>
 
-    <!-- footer Start -->
-    <footer class="footer section">
-      <div class="container">
-        <div class="columns is-multiline">
-          <div class="column is-3-widescreen is-6-tablet">
-            <div class="widget">
-              <div class="logo mb-4">
-                <h3>Animal Ark</h3>
+        <!-- footer Start -->
+        <footer class="footer section">
+          <div class="container">
+            <div class="columns is-multiline">
+              <div class="column is-3-widescreen is-6-tablet">
+                <div class="widget">
+                  <div class="logo mb-4">
+                    <h3>Animal Ark</h3>
+                  </div>
+                  <p>
+                    Animal Ark Pet Care Center is a one-stop shop for all your pet needs.
+                    We offer a wide variety of pet supplies as well as a full range of services
+                    veterinary care.
+                  </p>
+                </div>
               </div>
-              <p>
-                Animal Ark Pet Care Center is a one-stop shop for all your pet needs.
-                We offer a wide variety of pet supplies as well as a full range of services
-                veterinary care.
-              </p>
-            </div>
-          </div>
-          <div class="column is-2-widescreen is-6-desktop is-6-tablet ml-auto">
-            <div class="widget">
-              <h4 class="is-capitalize mb-4">Company</h4>
-
-              <ul class="list-unstyled footer-menu lh-35">
-                <a href="#">About</a>
-              </ul>
-            </div>
-          </div>
-          <div class="column is-3-widescreen is-6-desktop is-6-tablet">
-            <div class="widget">
-              <h4 class="is-capitalize mb-4">Support</h4>
-
-              <ul class="list-unstyled footer-menu lh-35">
-                <li><a href="FAQs.html">FAQ</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="column is-3-widescreen is-6-desktop is-6-tablet">
-            <div class="widget widget-contact">
-              <h4 class="is-capitalize mb-4">Get in Touch</h4>
-              <h6>
-                <a href="animalarkpetcenter@gmail.com">
-                  <i class="ti-headphone-alt mr-3"></i>animalarkpetcenter@gmail.com</a
-                >
-              </h6>
-
-
-              <ul class="list-inline footer-socials mt-5">
-                <li class="list-inline-item">
-                  <a href="https://www.facebook.com/animalarkpetcarecenter"
-                    ><i class="ti-facebook mr-2"></i
-                  ></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer-btm py-4 mt-6">
-          <div class="columns">
-            <div class="column is-6-widescreen">
-              <div class="copyright">
-                &copy; Copyright Reserved to
-                <span class="text-color">Animal Ark</span> by
-                <a href="https://themefisher.com/" target="_blank"
-                  >Kenya</a
-                >
+              <div class="column is-2-widescreen is-6-desktop is-6-tablet ml-auto">
+                <div class="widget">
+                  <h4 class="is-capitalize mb-4">Company</h4>
+    
+                  <ul class="list-unstyled footer-menu lh-35">
+                    <a href="#">About</a>
+                  </ul>
+                </div>
+              </div>
+              <div class="column is-3-widescreen is-6-desktop is-6-tablet">
+                <div class="widget">
+                  <h4 class="is-capitalize mb-4">Support</h4>
+    
+                  <ul class="list-unstyled footer-menu lh-35">
+                    <li><a href="FAQs.html">FAQ</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="column is-3-widescreen is-6-desktop is-6-tablet">
+                <div class="widget widget-contact">
+                  <h4 class="is-capitalize mb-4">Get in Touch</h4>
+                  <h6>
+                    <a href="animalarkpetcenter@gmail.com">
+                      <i class="ti-headphone-alt mr-3"></i>animalarkpetcenter@gmail.com</a
+                    >
+                  </h6>
+    
+    
+                  <ul class="list-inline footer-socials mt-5">
+                    <li class="list-inline-item">
+                      <a href="https://www.facebook.com/animalarkpetcarecenter"
+                        ><i class="ti-facebook mr-2"></i
+                      ></a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
+    
+            <div class="footer-btm py-4 mt-6">
+              <div class="columns">
+                <div class="column is-6-widescreen">
+                  <div class="copyright">
+                    &copy; Copyright Reserved to
+                    <span class="text-color">Animal Ark</span> by
+                    <a href="https://themefisher.com/" target="_blank"
+                      >Kenya</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </footer>
+        </footer>
 
     <!-- 
     Essential Scripts

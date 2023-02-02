@@ -1,6 +1,178 @@
-<!DOCTYPE html>
+<?php
+class Product 
+{
+  public $productId;
+  public $productName;
+  public $categoryId;
+  public $intendedFor;
+  public $description;
+  public $variations;
 
-<!-- iso choncc -->
+  function __construct($productId, $productName, $category, $intendedFor, $description, $variations)
+  {
+    $this->productId = $productId;
+    $this->productName = $productName;
+    $this->categoryId = $category;
+    $this->intendedFor = $intendedFor;
+    $this->description = $description;
+    $this->variations = $variations;
+  }
+}
+
+class Item
+{
+  public $itemId;
+  public $itemVariation;
+  public $itemImage;
+  public $itemPrice;
+  public $itemStocks;
+
+  function __construct($itemId, $itemVariation, $itemImage, $itemPrice, $itemStocks) 
+  {
+    $this->itemId = $itemId;
+    $this->itemVariation = $itemVariation;
+    $this->itemImage = $itemImage;
+    $this->itemPrice = $itemPrice;
+    $this->itemStocks = $itemStocks;
+  }
+}
+
+function getProducts($con, $category, $intendedFor)
+{
+  
+  $products = array();
+  $variations = array();
+  $groupingCondition = "";
+
+  if ($intendedFor == 'C')
+    $groupingCondition = "intended_for LIKE 'C%'";
+  else
+    $groupingCondition = "(intended_for LIKE 'D' OR intended_for LIKE '%D')";
+  
+
+  $qry = "SELECT * FROM products WHERE category_id='$category' AND $groupingCondition";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+
+        $row = $result->fetch_assoc();
+        extract($row);
+        $categoryName = getCategory($con, $category);
+        $variations = getItems($con, $id);
+
+        $product = new Product($id, $name, $categoryName, $intended_for, $description, $variations);
+
+        array_push($products, $product);
+      }
+  }
+
+  return $products;
+}
+
+function getCategory($con, $category_id)
+{
+  $qry = "SELECT * FROM categories WHERE id='$category_id'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+
+        $row = $result->fetch_assoc();
+        extract($row);
+
+        return $category;
+      }
+  }
+}
+
+function getItems($con, $product_id)
+{
+  $items = array();
+
+  $qry = "SELECT * FROM items WHERE product_id='$product_id' AND is_visible='Y'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+  
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+        $row = $result->fetch_assoc();
+        extract($row);
+
+        $item = new Item($id, $variation, $image, $price, $stocks);
+        array_push($items, $item);
+      }
+  }
+
+  return $items;
+}
+
+function getItem($con, $item_id)
+{
+  $qry = "SELECT * FROM items WHERE id='$item_id'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+        $item = $result->fetch_assoc();
+        return $item;
+      }
+  }
+}
+
+function getProduct($con, $product_id)
+{
+    $variations = array();
+    $qry = "SELECT * FROM products WHERE id='$product_id'";
+    $result = $con->query($qry);
+    $numrows = $result->num_rows;
+  
+    if ($numrows != "" && $numrows != 0) 
+    {
+        for ($i = 1; $i <= $numrows; $i++)
+        {
+          $row = $result->fetch_assoc();
+          extract($row);
+        //   $categoryName = getCategory($con, $category_id);
+          $variations = getItems($con, $id);
+  
+          $product = new Product($id, $name, $category_id, $intended_for, $description, $variations);
+  
+          return $product;
+        }
+    }
+}
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "animalark_db";
+
+$con = new mysqli($host, $user, $pass, $db);
+if($con === false) 
+    die('Couldn\'t connect: ' . $con->connect_errno());
+
+// if(isset($_GET["category_id"]) && !empty(trim($_GET["category_id"])))
+// {
+    $productId = $_GET['id'];
+    echo $productId;
+    $forNavigation = $_GET['navigation'];
+    echo $forNavigation;
+// }
+?>
+
+<!DOCTYPE html>
 <html lang="zxx">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -123,12 +295,15 @@
           <div class="col-sm-3">
             <div class="left-sidebar">
               <h2>Category</h2>
-
               <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="accordian" href="#sportswear">
+                      <a href="cust_shop.php">All Products</a>
+                    </h4>
+                    <br/>
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                         Cat Shop
                       </a>
@@ -137,18 +312,18 @@
                   <div id="sportswear" class="panel-collapse collapse in">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="">Cat Food </a></li>
-                        <li><a href="">Cat Care and Health Supplies</a></li>
-                        <li><a href="">Treats </a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=C">Cat Food and Treats</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=5&intendedFor=C">Cat Vitamins</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=2&intendedFor=C">Cat Medications and Others</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=3&intendedFor=C">Cat Shampoo and Soap</a></li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="accordian" href="#mens">
+                      <a data-toggle="collapse" data-parent="#accordian" href="#mens">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                         Dog Shop
                       </a>
@@ -157,10 +332,10 @@
                   <div id="mens" class="panel-collapse collapse in">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="">Dog Food</a></li>
-                        <li><a href="">Dog Care and Health Supplies</a></li>
-                        <li><a href="">Treats</a></li>
-
+                        <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=D">Dog Food and Treats</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=5&intendedFor=D">Dog Vitamins</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=2&intendedFor=D">Dog Medications and Others</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=3&intendedFor=D">Dog Shampoo and Soap</a></li>
                       </ul>
                     </div>
                   </div>
@@ -173,13 +348,39 @@
           </div>
           
           <div class="col-sm-9 padding-right">
-            <div id="breadcrumbs">
-                <a href="/">Home</a> > 
-                <a href="/categories">Categories</a> > 
-                <a href="/categories/dogshop">dogshop</a> > 
-                <a href="/categories/dogshop/treats">Treats</a> > 
-                <a>Item ni blad</a>
-              </div>
+
+            <?php
+            $product = getProduct($con, $productId);
+
+            if($forNavigation == "All Products")
+            {
+                echo "
+                <div id=\"breadcrumbs\">
+                    <a href=\"cust_shop.php\">$forNavigation</a> >
+                    <a>$product->productName</a>
+                </div>
+                ";
+            }
+
+            else
+            {
+                list($shopGroup, $categoryName) = explode('-', $forNavigation);
+                $category_id = $product->categoryId;
+
+                if($category_id == 4) {
+                    $category_id = 3;
+                }
+
+                echo "
+                <div id=\"breadcrumbs\">
+                    <a href=\"cust_shop.php\">$shopGroup</a> >
+                    <a href=\"shop_prodbycategory.php?category_id=$category_id&intendedFor=$shopGroup[0]\">$categoryName</a> > 
+                    <a>$product->productName</a>
+                </div>
+                ";
+            }
+
+            ?>
 
 
             <div class="product-details"><!--product-details-->
@@ -221,7 +422,7 @@
                 </div>
                 <div class="col-sm-7">
                     <div class="product-information"><!--/product-information-->
-                        <h2 style="font-size: 30px;">Item ni blad</h2>
+                        <h2 style="font-size: 30px;"><?php echo $product->productName; ?></h2>
                         <span style="font-size: 25px; color: #ff715b;">Price: ₱150</span>
                         <p>Brand: Snacks ni Aspin</p>
                         <p><b>In Stock: </b> 999 </p>
@@ -410,8 +611,8 @@
     </br>
     </br>
     </br>
-    <!-- footer Start -->
-    <footer class="footer section">
+  <!-- footer Start -->
+  <footer class="footer section">
       <div class="container">
         <div class="columns is-multiline">
           <div class="column is-3-widescreen is-6-tablet">
