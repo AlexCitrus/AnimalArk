@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<style>
-  .h3{
-    overflow-wrap: break-word;
-  }
-</style>
+<?php
+session_start();
+include('functions.php');
+if (!isLoggedIn()) {
+  Print '<script>window.location.assign("login.html");</script>';
+}
 
-<!-- <?php
-// include('./functions.php');
-// if (!isLoggedIn()) {
-// 	$_SESSION['msg'] = "You must log in first";
-// 	header('location: login.html');
-// }
-?> -->
+?>
 
 <?php
 class Product 
@@ -230,18 +224,18 @@ function getItems($con, $product_id)
 //   }
 // }
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "animalark_db";
+$db_name = "id20237149_animalark_db";
+$db_username = "id20237149_animalark";
+$db_pass = "P@ssw0rd!123";
+$db_host = "localhost";
 
-$con = new mysqli($host, $user, $pass, $db);
+$con = new mysqli($db_host, $db_username, $db_pass, $db_name);
 if($con === false) 
     die('Couldn\'t connect: ' . $con->connect_errno());
 
 $forNavigation = "All Products";
 ?>
-
+<!DOCTYPE html>
 <html lang="zxx">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -320,11 +314,11 @@ $forNavigation = "All Products";
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="about.html">Products</a>
+                <a class="navbar-link" href="cust_shop.php">Products</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="project.html">FAQ</a>
+                <a class="navbar-link" href="FAQs.html">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">

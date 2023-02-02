@@ -1,5 +1,12 @@
-<!DOCTYPE html>
+<?php
+session_start();
+include('functions.php');
+if (!isLoggedIn()) {
+  Print '<script>window.location.assign("login.html");</script>';
+}
 
+?>
+<!DOCTYPE html>
 <html lang="zxx">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -18,7 +25,7 @@
 
     <!-- theme meta -->
     <meta name="theme-name" content="orbitor-bulma" />
-    <link rel="icon" href ="/images/animalarklogo.png" type = "image/x-icon">
+
     <title>Animal Ark</title>
 
     <!-- Favicon -->
@@ -64,35 +71,29 @@
       <div class="container">
         <nav class="navbar">
           <div class="navbar-brand">
-            <a class="navbar-item mr-5" href="index.php">
+            <a class="navbar-item mr-5" href="admin_home.html">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
-            <button
-              role="button"
-              class="navbar-burger burger"
-              data-hidden="true"
-              data-target="navigation"
-            >
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </button>
           </div>
 
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="index.php">Home</a>
+                <a class="navbar-link" href="admin_home.html">Home</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="./FAQs.html">FAQ</a>
+                <a class="navbar-link" href="ani_shop.html">Products</a>
+              </li>
+
+              <li class="navbar-item">
+                <a class="navbar-link" href="">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">
               <li class="navbar-item">
-                <a href="./login.html" class="btn btn-solid-border"
-                  >Log-in <i class="fa fa-angle-right ml-2"></i
+                <a href="./logout.php" class="btn btn-solid-border"
+                  >Log-out <i class="fa fa-angle-right ml-2"></i
                 ></a>
               </li>
             </ul>
@@ -112,9 +113,9 @@
               >
               <h1 class="my-4">Animal Ark Pet Care Center</h1>
               <p class="mb-6">
-                Veritatis earum aliquid doloribus molestias, eveniet molestiae
-                aperiam ratione. Facilis velit voluptatibus impedit eligendi
-                delectus illo earum voluptatum, laudantium molestiae!
+                Animal Ark Pet Care Center is a one-stop shop for all your pet needs.
+                We offer a wide variety of pet supplies as well as a full range of services
+                veterinary care.
               </p>
 
               <a href="about.html" target="_blank" class="btn btn-main"
@@ -135,6 +136,14 @@
       <div class="container">
         <div class="columns is-desktop">
           <div class="column is-desktop">
+
+            <div class="btn_cont">
+              <a href="createAnnouncement.html">
+                <button class="button">Create New</button>
+              </a>
+            </div>
+            </br>
+            </br>
             <div class="card is-horizontal">
               <div class="card-image">
                 <figure class="image is-square">
@@ -144,23 +153,36 @@
               <div class="card-stacked">
                 <div class="card-content">
                   <div class="media-content">
-                    <p class="title is-1">Announcement</p>
-                  </div>
 
-                  <div class="content">
-                  <?php
-                    $con = mysqli_connect("localhost", "id20237149_animalark", "P@ssw0rd!123", "id20237149_animalark_db") or die(mysqli_error()); //Connect to server
-                    $query = mysqli_query($con, "SELECT * FROM announcements"); // SQL Query
-                    
-                    while($row = mysqli_fetch_array($query)) // prints the prospects
-                    {
-                    echo "<b>Subject: </b>";
-                    echo $row['subject'] . "</br>" . "</br>";
-                    echo $row['description'] . "</br>" . "</br>";
-                    echo $row['date_posted'];
-                    }
-                  ?>
+                        <div class="radio_cont">
+                            <label style="font-size: 20px;">Status:  </label>
+                            <input type="radio" name="group1" value="option1"> Open
+                            <input type="radio" name="group1" value="option2"> Closed<br>
+                        </div>
+                        
+                    <p class="title is-1">Announcement</p>
+
+                    <div class="content">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Phasellus nec iaculis mauris. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                        <a href="#">#css</a> <a href="#">#responsive</a>
+                        <br />
+                        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+
+                        <div class="annce_btn">
+                          <a href="editAnnouncement.html">
+                            <button class="edit-button">Edit</button>
+                          </a>
+                          <button class="delete-button">Delete</button>
+                        </div>
+
                   </div>
+                </div>
+
+
                 </div>
               </div>
             </div>
@@ -318,8 +340,8 @@
       </div>
     </section>
 
-        <!-- footer Start -->
-        <footer class="footer section">
+    <!-- footer Start -->
+    <footer class="footer section">
       <div class="container">
         <div class="columns is-multiline">
           <div class="column is-3-widescreen is-6-tablet">
@@ -393,38 +415,6 @@
     Essential Scripts
     =====================================-->
 
-    <!-- API Messenger -->
-    <!-- Messenger Chat Plugin Code -->
-    <div id="fb-root"></div>
-
-    <!-- Your Chat Plugin code -->
-    <div id="fb-customer-chat" class="fb-customerchat">
-    </div>
-
-    <script>
-      var chatbox = document.getElementById('fb-customer-chat');
-      chatbox.setAttribute("page_id", "106217825715524");
-      chatbox.setAttribute("attribution", "biz_inbox");
-    </script>
-
-    <!-- Your SDK code -->
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          xfbml            : true,
-          version          : 'v15.0'
-        });
-      };
-
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
-    
     <!-- Main jQuery -->
     <script src="plugins/jquery/jquery.js"></script>
     <script src="js/contact.js"></script>

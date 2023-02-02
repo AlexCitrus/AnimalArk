@@ -29,8 +29,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
     while($row = mysqli_fetch_array($results)) //display all rows from query
     {
-        mysqli_query($con, "DELETE FROM announcements"); // removes the selected data from the database
-        $table_announcements = $row['subject']; // the first username row is passed on to $table_users, and so on until the query is finished
+        mysqli_query($con, "DELETE FROM announcements"); // deletes the current announcement
+        $table_announcements = $row['subject'];
     }
 
     //adds teh newly inputted user data to the users db

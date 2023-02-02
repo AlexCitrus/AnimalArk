@@ -29,14 +29,16 @@ if (isset($_POST['email']) && isset($_POST['pass'])) {
         $results = mysqli_query($con, $query);
 
         if (mysqli_num_rows($results) === 1) {
+            
             $row = mysqli_fetch_assoc($results);
-
                 if($row['user_type']=="admin"){
+                    $_SESSION['user'] = $email;
                     print '<script>alert("Welcome Admin!");</script>'; // Prompts the user
-                    print '<script>window.location.assign("admin_home.html");</script>'; // redirects to login.php
+                    print '<script>window.location.assign("admin_home.php");</script>'; // redirects to login.php
                 }
                 
                 else if($row['user_type']=="user"){
+                    $_SESSION['user'] = $email;
                     print '<script>alert("Successfully Logged In!");</script>'; // Prompts the user
                     print '<script>window.location.assign("cust_shop.php");</script>'; // redirects to login.php
                 } 
