@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<style>
+  .h3{
+    overflow-wrap: break-word;
+  }
+</style>
 
 <!-- <?php
 // include('./functions.php');
@@ -70,7 +75,7 @@ function displayProduct($product, $all, $forNavigation)
     echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
     echo "
             <h2>₱ $itemPrice</h2>
-            <p>$productName</p>
+            <h3>$productName</h3>
           </div>
           <div class=\"product-overlay\">
             <div class=\"overlay-content\">
