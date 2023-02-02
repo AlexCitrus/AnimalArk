@@ -9,6 +9,10 @@
 ?> -->
 
 <?php
+<<<<<<< HEAD
+=======
+
+>>>>>>> b5d794b14baf70bb0b89790fe6d9c6e955cdf59d
 class Product 
 {
   public $productId;
@@ -356,14 +360,17 @@ $forNavigation = "All Products";
       <div class="container">
         <div class="row">
           <div class="col-sm-3">
-          <div class="left-sidebar">
+            <div class="left-sidebar">
               <h2>Category</h2>
-
               <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="accordian" href="#sportswear">
+                      <a href="">All Products</a>
+                    </h4>
+                    <br/>
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                         Cat Shop
                       </a>
@@ -372,18 +379,18 @@ $forNavigation = "All Products";
                   <div id="sportswear" class="panel-collapse collapse in">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="">Cat Food </a></li>
-                        <li><a href="">Cat Care and Health Supplies</a></li>
-                        <li><a href="">Treats </a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=C">Cat Food and Treats</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=5&intendedFor=C">Cat Vitamins</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=2&intendedFor=C">Cat Medications and Others</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=3&intendedFor=C">Cat Shampoo and Soap</a></li>
                       </ul>
                     </div>
                   </div>
                 </div>
-
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="accordian" href="#mens">
+                      <a data-toggle="collapse" data-parent="#accordian" href="#mens">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                         Dog Shop
                       </a>
@@ -392,10 +399,10 @@ $forNavigation = "All Products";
                   <div id="mens" class="panel-collapse collapse in">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="">Dog Food</a></li>
-                        <li><a href="">Dog Care and Health Supplies</a></li>
-                        <li><a href="">Treats</a></li>
-
+                        <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=D">Dog Food and Treats</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=5&intendedFor=D">Dog Vitamins</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=2&intendedFor=D">Dog Medications and Others</a></li>
+                        <li><a href="shop_prodbycategory.php?category_id=3&intendedFor=D">Dog Shampoo and Soap</a></li>
                       </ul>
                     </div>
                   </div>
