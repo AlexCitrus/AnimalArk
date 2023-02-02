@@ -9,10 +9,6 @@
 ?> -->
 
 <?php
-<<<<<<< HEAD
-=======
-
->>>>>>> b5d794b14baf70bb0b89790fe6d9c6e955cdf59d
 class Product 
 {
   public $productId;
