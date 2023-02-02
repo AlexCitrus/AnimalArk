@@ -4,7 +4,7 @@
 include('./functions.php');
 if (!isLoggedIn()) {
 	$_SESSION['msg'] = "You must log in first";
-	header('location: login.html');
+  print '<script>window.location.assign("login.html");</script>'; // redirects to login.php
 }
 ?>
 
