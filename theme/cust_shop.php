@@ -9,12 +9,6 @@
 ?> -->
 
 <?php
-<<<<<<< HEAD
-include('./functions.php');
-if (!isLoggedIn()) {
-	$_SESSION['msg'] = "You must log in first";
-  print '<script>window.location.assign("login.html");</script>'; // redirects to login.php
-=======
 class Product 
 {
   public $productId;
@@ -33,7 +27,6 @@ class Product
     $this->description = $description;
     $this->variations = $variations;
   }
->>>>>>> 64220e4a50409576d5dac138355213a7bbab7f0b
 }
 
 class Item
