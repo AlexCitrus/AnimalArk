@@ -52,6 +52,11 @@ function displayProduct($product, $all, $forNavigation)
   $productName = $product->productName;
   $variations = $product->variations;
 
+  if (strlen($productName) > 30)
+    $truncatedProductName = substr($productName, 0, 30) . '...';
+  else
+    $truncatedProductName = $productName;
+
   if($all) 
   {
     $item = $variations[0];
@@ -69,13 +74,13 @@ function displayProduct($product, $all, $forNavigation)
     echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
     echo "
             <h2>₱ $itemPrice</h2>
-            <p>$productName</p>
+            <p>$truncatedProductName</p>
           </div>
           <div class=\"product-overlay\">
             <div class=\"overlay-content\">
               <h2>In Stock: </h2>
               <p>$itemStocks</p>
-              <a href=\"cust_proddetails.php?id=$productId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
+              <a href=\"cust_proddetails.php?id=$productId&item_id=$itemId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
             </div>
           </div>
         </div>
@@ -103,7 +108,7 @@ function displayProduct($product, $all, $forNavigation)
       echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
       echo "
               <h2>₱ $itemPrice</h2>
-              <p>$productName</p>
+              <p>$truncatedProductName</p>
             </div>
             <div class=\"product-overlay\">
               <div class=\"overlay-content\">
@@ -431,12 +436,12 @@ $forNavigation = "All Products";
                 }
               ?>
               
-              <ul class="pagination">
+              <!-- <ul class="pagination">
                 <li class="active"><a href="">1</a></li>
                 <li><a href="">2</a></li>
                 <li><a href="">3</a></li>
                 <li><a href="">&raquo;</a></li>
-              </ul>
+              </ul> -->
             </div><!--features_items-->
           </div>
         </div>
