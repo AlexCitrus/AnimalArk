@@ -48,8 +48,8 @@ class Item
 }
 function displayProduct($product, $all, $forNavigation)
 {
-  $productId = $product->productId;
   $productName = $product->productName;
+  $productId = $product->productId;
   $variations = $product->variations;
 
   if($all) 
@@ -75,7 +75,7 @@ function displayProduct($product, $all, $forNavigation)
             <div class=\"overlay-content\">
               <h2>In Stock: </h2>
               <p>$itemStocks</p>
-              <a href=\"cust_proddetails.php?id=$productId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
+              <a href=\"cust_proddetails.php?id=$productId&item_id=$itemId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@ function displayProduct($product, $all, $forNavigation)
               <div class=\"overlay-content\">
                 <h2>In Stock: </h2>
                 <p>$itemStocks</p>
-                <a href=\"cust_proddetails.php?id=$productId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
+                <a href=\"cust_proddetails.php?id=$itemId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
               </div>
             </div>
           </div>
@@ -120,13 +120,20 @@ function displayProduct($product, $all, $forNavigation)
   }
 }
 
-function getProducts($con, $category)
+function getProducts($con, $category, $intendedFor)
 {
-  // OK NA
+  
   $products = array();
   $variations = array();
+  $groupingCondition = "";
 
-  $qry = "SELECT * FROM products WHERE category_id='$category'";
+  if ($intendedFor == 'C')
+    $groupingCondition = "intended_for LIKE 'C%'";
+  else
+    $groupingCondition = "(intended_for LIKE 'D' OR intended_for LIKE '%D')";
+  
+
+  $qry = "SELECT * FROM products WHERE category_id='$category' AND $groupingCondition";
   $result = $con->query($qry);
   $numrows = $result->num_rows;
 
@@ -151,7 +158,6 @@ function getProducts($con, $category)
 
 function getCategory($con, $category_id)
 {
-  // OK NA
   $qry = "SELECT * FROM categories WHERE id='$category_id'";
   $result = $con->query($qry);
   $numrows = $result->num_rows;
@@ -171,7 +177,6 @@ function getCategory($con, $category_id)
 
 function getItems($con, $product_id)
 {
-  // OK NA
   $items = array();
 
   $qry = "SELECT * FROM items WHERE product_id='$product_id' AND is_visible='Y'";
@@ -209,8 +214,10 @@ function getItems($con, $product_id)
 //   }
 // }
 
-// function getProduct($con, $product_id)
+// function getProduct($con, $item)
 // {
+//   extract($item);
+
 //   $qry = "SELECT * FROM products WHERE id='$product_id'";
 //   $result = $con->query($qry);
 //   $numrows = $result->num_rows;
@@ -234,7 +241,27 @@ $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 
     die('Couldn\'t connect: ' . $con->connect_errno());
 
-$forNavigation = "All Products";
+// if(isset($_GET["category_id"]) && !empty(trim($_GET["category_id"])))
+// {
+  $chosenCategory = $_GET['category_id'];
+  $grouping = $_GET['intendedFor'];
+// }
+
+if ($chosenCategory == 3)
+  $category_name = "Shampoo and Soap";
+else
+  $category_name = getCategory($con, $chosenCategory);
+
+if ($grouping == 'C') 
+{
+  $pageTitle = "CAT " . $category_name;
+  $forNavigation = "Cat Shop-$category_name";
+} 
+else 
+{
+  $pageTitle = "DOG " . $category_name;
+  $forNavigation = "Dog Shop-$category_name";
+}
 ?>
 
 <html lang="zxx">
@@ -362,7 +389,7 @@ $forNavigation = "All Products";
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a href="">All Products</a>
+                      <a href="cust_shop.php">All Products</a>
                     </h4>
                     <br/>
                     <h4 class="panel-title">
@@ -375,7 +402,7 @@ $forNavigation = "All Products";
                   <div id="sportswear" class="panel-collapse collapse">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=C">Cat Food and Treats</a></li>
+                      <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=C">Cat Food and Treats</a></li>
                         <li><a href="shop_prodbycategory.php?category_id=5&intendedFor=C">Cat Vitamins</a></li>
                         <li><a href="shop_prodbycategory.php?category_id=2&intendedFor=C">Cat Medications and Others</a></li>
                         <li><a href="shop_prodbycategory.php?category_id=3&intendedFor=C">Cat Shampoo and Soap</a></li>
@@ -395,7 +422,7 @@ $forNavigation = "All Products";
                   <div id="mens" class="panel-collapse collapse">
                     <div class="panel-body">
                       <ul>
-                        <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=D">Dog Food and Treats</a></li>
+                      <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=D">Dog Food and Treats</a></li>
                         <li><a href="shop_prodbycategory.php?category_id=5&intendedFor=D">Dog Vitamins</a></li>
                         <li><a href="shop_prodbycategory.php?category_id=2&intendedFor=D">Dog Medications and Others</a></li>
                         <li><a href="shop_prodbycategory.php?category_id=3&intendedFor=D">Dog Shampoo and Soap</a></li>
@@ -412,24 +439,38 @@ $forNavigation = "All Products";
           
           <div class="col-sm-9 padding-right">
             <div class="features_items"><!--features_items-->
-              <h2 class="title text-center">All Products</h2>
+              <h2 class="title text-center"><?php echo $pageTitle; ?></h2>
               
               <!-- DISPLAYING PRODUCTS -->
 
               <?php
-              // ALL PRODUCTS
-                $categories = array(1, 2, 3, 4, 5);
-                $products_per_category = array();
-                foreach($categories as $category)
+              $categories = array(1, 2, 5);
+              $products_per_category = array();
+              if (in_array($chosenCategory, $categories)) 
+              {
+                $products_per_category = getProducts($con, $chosenCategory, $grouping);
+
+                foreach ($products_per_category as $product) {
+                  displayProduct($product, true, $forNavigation);
+                }
+              }
+
+              else
+              {
+                $prospectCategories = array(3, 4);
+                foreach($prospectCategories as $chosenCategory)
                 {
-                  $products_per_category = getProducts($con, $category);
-                  
+                  $products_per_category = getProducts($con, $chosenCategory, $grouping);
+
                   foreach($products_per_category as $product)
                   {
                     displayProduct($product, true, $forNavigation);
                   }
                 }
+              }
               ?>
+              
+
               
               <ul class="pagination">
                 <li class="active"><a href="">1</a></li>
