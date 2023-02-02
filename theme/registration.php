@@ -9,9 +9,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     $user_type = "user";
 
     $bool = true;
-    $db_name = "id20217626_test";
-    $db_username = "id20217626_thea";
-    $db_pass = "Pass!1234567";
+    $db_name = "id20237149_animalark_db";
+    $db_username = "id20237149_animalark";
+    $db_pass = "P@ssw0rd!123";
     $db_host = "localhost";
     $con = mysqli_connect("$db_host","$db_username","$db_pass", "$db_name") or die(mysqli_error()); //Connect to server
     $query = "SELECT * from users";

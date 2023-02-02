@@ -9,6 +9,7 @@
 ?> -->
 
 <?php
+
 class Product 
 {
   public $productId;
