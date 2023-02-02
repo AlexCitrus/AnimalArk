@@ -24,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         {
             $bool = false; // sets bool to false
             Print '<script>alert("Email has already been registered!");</script>'; //Prompts the user
-            Print '<script>window.location.assign("registration.php");</script>'; // redirects to register.php
+            Print '<script>window.location.assign("registration.html");</script>'; // redirects to register.php
         }
     }
 

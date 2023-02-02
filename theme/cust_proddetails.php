@@ -120,10 +120,9 @@ function getItem($con, $item_id)
   $qry = "SELECT * FROM items WHERE id='$item_id'";
   $result = $con->query($qry);
   $numrows = $result->num_rows;
-
   if ($numrows != "" && $numrows != 0) 
   {
-      for ($i = 1; $i <= $numrows; $i++)
+      for ($i = 0; $i < $numrows; $i++)
       {
         $item = $result->fetch_assoc();
         return $item;
@@ -154,6 +153,32 @@ function getProduct($con, $product_id)
     }
 }
 
+function displayProductVariations($product, $forNavigation) 
+{
+  $items = $product->variations;
+  $product_id = $product->productId;
+  
+  foreach($items as $item) 
+  {
+    $item_id = $item->itemId;
+    $item_variation = $item->itemVariation;
+    $item_image = $item->itemImage;
+    $item_price = $item->itemPrice;
+    $item_stocks = $item->itemStocks;
+
+    $base64Image = base64_encode($item_image);
+
+    echo "
+    <a href=\"cust_proddetails.php?id=$product_id&item_id=$item_id&navigation=$forNavigation\">
+      <img src=\"data:image/jpeg;base64,$base64Image\" height=\"85\" width=\"85\"/></a>
+    ";
+  }
+}
+
+function imageDisplay($image) {
+  echo '<img src="data:image/jpeg;base64,' . base64_encode($image) . '"/>';
+}
+
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -166,9 +191,8 @@ if($con === false)
 // if(isset($_GET["category_id"]) && !empty(trim($_GET["category_id"])))
 // {
     $productId = $_GET['id'];
-    echo $productId;
+    $itemId = $_GET['item_id'];
     $forNavigation = $_GET['navigation'];
-    echo $forNavigation;
 // }
 ?>
 
@@ -367,9 +391,8 @@ if($con === false)
                 list($shopGroup, $categoryName) = explode('-', $forNavigation);
                 $category_id = $product->categoryId;
 
-                if($category_id == 4) {
+                if($category_id == 4)
                     $category_id = 3;
-                }
 
                 echo "
                 <div id=\"breadcrumbs\">
@@ -380,34 +403,28 @@ if($con === false)
                 ";
             }
 
+            $item = getItem($con, $itemId);
+            extract($item);
             ?>
 
 
             <div class="product-details"><!--product-details-->
                 <div class="col-sm-5" style="margin-top: 30px; margin-bottom: 30px; ">
                     <div class="view-product" style="margin-left: 20px;">
-                        <img src="images/shop/product12.jpg" alt="" />
+                    <!-- <img src="data:image/jpeg;base64, <?php echo base64_encode($image); ?>"/> -->
+                    <?php
+                    imageDisplay($image);
+                    ?>
                     </div>
                     <div id="similar-product" class="carousel slide" data-ride="carousel" style="margin-left: 10px;">
                         
                           <!-- Wrapper for slides -->
                             <div class="carousel-inner">
                                 <div class="item active">
-                                  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+                                  <?php
+                                  displayProductVariations($product, $forNavigation);
+                                  ?>
                                 </div>
-                                <div class="item">
-                                  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                </div>
-                                <div class="item">
-                                  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                </div>
-                                
                             </div>
     
                           <!-- Controls -->
@@ -423,12 +440,11 @@ if($con === false)
                 <div class="col-sm-7">
                     <div class="product-information"><!--/product-information-->
                         <h2 style="font-size: 30px;"><?php echo $product->productName; ?></h2>
-                        <span style="font-size: 25px; color: #ff715b;">Price: ₱150</span>
-                        <p>Brand: Snacks ni Aspin</p>
-                        <p><b>In Stock: </b> 999 </p>
+                        <span style="font-size: 25px; color: #ff715b;">Price: <?php echo $price; ?></span>
+                        <p>Variation: <?php echo $variation; ?></p>
+                        <p><b>In Stock: </b> <?php echo $stocks; ?> </p>
                         <hr style="width:91%; height:1px; background-color: rgb(131, 128, 128);"/>
-                        <p style="margin-right:25px;">Tempora dolorem voluptatum nam vero assumenda voluptate, facilis
-                            ad eos obcaecati tenetur veritatis eveniet distinctio.</p>
+                        <p style="margin-right:25px;"><?php echo $product->description; ?></p>
                     </div><!--/product-information-->
                 </div>
             </div><!--/product-details-->

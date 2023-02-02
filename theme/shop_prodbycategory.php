@@ -61,6 +61,11 @@ function displayProduct($product, $all, $forNavigation)
     $itemPrice = $item->itemPrice;
     $itemStocks = $item->itemStocks;
 
+    if (strlen($productName) > 30)
+      $truncatedProductName = substr($productName, 0, 30) . '...';
+    else
+      $truncatedProductName = $productName;
+
     echo "
       <div class=\"col-sm-4\">
       <div class=\"product-image-wrapper\">
@@ -69,7 +74,7 @@ function displayProduct($product, $all, $forNavigation)
     echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
     echo "
             <h2>₱ $itemPrice</h2>
-            <p>$productName</p>
+            <p>$truncatedProductName</p>
           </div>
           <div class=\"product-overlay\">
             <div class=\"overlay-content\">
@@ -94,6 +99,11 @@ function displayProduct($product, $all, $forNavigation)
       $itemImage = $item->itemImage;
       $itemPrice = $item->itemPrice;
       $itemStocks = $item->itemStocks;
+
+      if (strlen($productName) > 30)
+        $truncatedProductName = substr($productName, 0, 30) . '...';
+      else
+        $truncatedProductName = $productName;
   
       echo "
         <div class=\"col-sm-4\">
@@ -103,7 +113,7 @@ function displayProduct($product, $all, $forNavigation)
       echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
       echo "
               <h2>₱ $itemPrice</h2>
-              <p>$productName</p>
+              <p>$truncatedProductName</p>
             </div>
             <div class=\"product-overlay\">
               <div class=\"overlay-content\">
@@ -399,7 +409,7 @@ else
                       </a>
                     </h4>
                   </div>
-                  <div id="sportswear" class="panel-collapse collapse">
+                  <div id="sportswear" class="panel-collapse collapse in">
                     <div class="panel-body">
                       <ul>
                       <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=C">Cat Food and Treats</a></li>
@@ -419,7 +429,7 @@ else
                       </a>
                     </h4>
                   </div>
-                  <div id="mens" class="panel-collapse collapse">
+                  <div id="mens" class="panel-collapse collapse in">
                     <div class="panel-body">
                       <ul>
                       <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=D">Dog Food and Treats</a></li>
@@ -472,12 +482,12 @@ else
               
 
               
-              <ul class="pagination">
+              <!-- <ul class="pagination">
                 <li class="active"><a href="">1</a></li>
                 <li><a href="">2</a></li>
                 <li><a href="">3</a></li>
                 <li><a href="">&raquo;</a></li>
-              </ul>
+              </ul> -->
             </div><!--features_items-->
           </div>
         </div>

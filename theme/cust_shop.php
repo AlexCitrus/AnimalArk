@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-
 <!-- <?php
-// include('./functions.php');
+// session_start();
+// include('functions.php');
 // if (!isLoggedIn()) {
-// 	$_SESSION['msg'] = "You must log in first";
-// 	header('location: login.html');
+//   Print '<script>window.location.assign("login.html");</script>';
 // }
+
 ?> -->
 
 <?php
@@ -52,6 +51,11 @@ function displayProduct($product, $all, $forNavigation)
   $productName = $product->productName;
   $variations = $product->variations;
 
+  if (strlen($productName) > 30)
+    $truncatedProductName = substr($productName, 0, 30) . '...';
+  else
+    $truncatedProductName = $productName;
+
   if($all) 
   {
     $item = $variations[0];
@@ -69,13 +73,13 @@ function displayProduct($product, $all, $forNavigation)
     echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
     echo "
             <h2>₱ $itemPrice</h2>
-            <p>$productName</p>
+            <p>$truncatedProductName</p>
           </div>
           <div class=\"product-overlay\">
             <div class=\"overlay-content\">
               <h2>In Stock: </h2>
               <p>$itemStocks</p>
-              <a href=\"cust_proddetails.php?id=$productId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
+              <a href=\"cust_proddetails.php?id=$productId&item_id=$itemId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
             </div>
           </div>
         </div>
@@ -103,7 +107,7 @@ function displayProduct($product, $all, $forNavigation)
       echo '<img src="data:image/jpeg;base64,' . base64_encode($itemImage) . '"/>'; //. '" height=200"/>';
       echo "
               <h2>₱ $itemPrice</h2>
-              <p>$productName</p>
+              <p>$truncatedProductName</p>
             </div>
             <div class=\"product-overlay\">
               <div class=\"overlay-content\">
@@ -225,6 +229,15 @@ function getItems($con, $product_id)
 //   }
 // }
 
+// $db_name = "id20237149_animalark_db";
+// $db_username = "id20237149_animalark";
+// $db_pass = "P@ssw0rd!123";
+// $db_host = "localhost";
+
+// $con = new mysqli($db_host, $db_username, $db_pass, $db_name);
+// if($con === false) 
+//     die('Couldn\'t connect: ' . $con->connect_errno());
+
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -232,11 +245,11 @@ $db = "animalark_db";
 
 $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 
-    die('Couldn\'t connect: ' . $con->connect_errno());
+  die('Couldn\'t connect: ' . $con->connect_errno());
 
 $forNavigation = "All Products";
 ?>
-
+<!DOCTYPE html>
 <html lang="zxx">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -315,11 +328,11 @@ $forNavigation = "All Products";
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="about.html">Products</a>
+                <a class="navbar-link" href="cust_shop.php">Products</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="project.html">FAQ</a>
+                <a class="navbar-link" href="FAQs.html">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">
@@ -431,12 +444,12 @@ $forNavigation = "All Products";
                 }
               ?>
               
-              <ul class="pagination">
+              <!-- <ul class="pagination">
                 <li class="active"><a href="">1</a></li>
                 <li><a href="">2</a></li>
                 <li><a href="">3</a></li>
                 <li><a href="">&raquo;</a></li>
-              </ul>
+              </ul> -->
             </div><!--features_items-->
           </div>
         </div>
