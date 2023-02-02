@@ -102,7 +102,7 @@
         <div class="formbold-form-wrapper">    
           <form action="https://formbold.com/s/FORM_ID" method="POST">
             <div class="formbold-form-title">
-              <h2 class="">Create Product</h2>
+              <h2 class="">Edit Item</h2>
               <p>
                 Simply input the necessary details, add a product image, and publish your new item to the site.
                  Start selling and reaching a wider audience in no time!
@@ -111,35 +111,52 @@
       
 
             <div class="formbold-mb-3">
-              <label for="prod_title" class="formbold-form-label">Product Title</label>
+              <label for="prod_title" class="formbold-form-label">Item Variation</label>
               <input type="text" name="prod_title" id="prod_title" class="formbold-form-input" />
             </div>
-      
-            <div class="formbold-mb-3">
-              <label for="prod_desc" class="formbold-form-label">Product Description</label>
-              <textarea  class="formbold-form-prod_desc" id="prod_desc" name="prod_desc" rows="10" cols="50"></textarea>
-            </div>
+
+            <form action="upload.php" method="post" enctype="multipart/form-data">
+                <label for="prod_img" class="formbold-form-label">Item Image</label>
+                <div class="image-upload">
+                  <img src="#" id="preview" alt="Image placeholder.">
+                </div>
+                </br>
+                <input type="file" accept="image/*" name="image" id="image">
+              </form>
 
 
-
-            <div class="formbold-mb-3">
-                <label for="prod_cate" class="formbold-form-label">Category</label>
-                <select name="prod_cate" id="prod_cate" class="formbold-form-input">
-                    <option hidden disabled selected></option>
-                  <option value="Food and Treats">Food and Treats</option>
-                  <option value="Medications and Others">Medications and Others</option>
-                  <option value="Shampoo">Shampoo</option>
-                  <option value="Soap">Soap</option>
-                  <option value="Vitamins">Vitamins</option>
-                </select>
+            <div class="formbold-input-flex">
+              <div>
+                <label for="prod_price" class="formbold-form-label">Item Price</label>
+                <input type="text" name="prod_price" id="pprod_price" class="formbold-form-input" placeholder="₱ 0.00"/>
+              </div>
+              <div>
+                <label for="prod_stocks" class="formbold-form-label">Item Stocks</label>
+                <input type="text" name="prod_stocks" id="prod_stocks" class="formbold-form-input"/>
               </div>
 
-            <div class="formbold-mb-3" style="color: black;">
-                <label for="prod_cate" class="formbold-form-label">Product Intended for:</label>
-                <input type="checkbox" name="group1" value="option1"> Dog
-                <input type="checkbox" name="group1" value="option2"> Cat
+              
             </div>
-    
+      
+            <div class="formbold-checkbox-wrapper">
+              <label for="supportCheckbox" class="formbold-checkbox-label">
+                <div class="formbold-relative">
+                  <input
+                    type="checkbox"
+                    id="supportCheckbox"
+                    class="formbold-input-checkbox"
+                  />
+                  <div class="formbold-checkbox-inner">
+                    <span class="formbold-opacity-0">
+                      <svg width="11" height="8" viewBox="0 0 11 8" fill="none" class="formbold-stroke-current" >
+                        <path d="M10.0915 0.951972L10.0867 0.946075L10.0813 0.940568C9.90076 0.753564 9.61034 0.753146 9.42927 0.939309L4.16201 6.22962L1.58507 3.63469C1.40401 3.44841 1.11351 3.44879 0.932892 3.63584C0.755703 3.81933 0.755703 4.10875 0.932892 4.29224L0.932878 4.29225L0.934851 4.29424L3.58046 6.95832C3.73676 7.11955 3.94983 7.2 4.1473 7.2C4.36196 7.2 4.55963 7.11773 4.71406 6.9584L10.0468 1.60234C10.2436 1.4199 10.2421 1.1339 10.0915 0.951972ZM4.2327 6.30081L4.2317 6.2998C4.23206 6.30015 4.23237 6.30049 4.23269 6.30082L4.2327 6.30081Z" stroke-width="0.4"></path>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                Is Item Visible?
+              </label>
+            </div>
       
             <button class="formbold-btn">Submit</button>
           </form>
