@@ -315,7 +315,7 @@ $forNavigation = "All Products";
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="index.php">Home</a>
+                <a class="navbar-link" href="home.php">Home</a>
               </li>
 
               <li class="navbar-item">
@@ -328,7 +328,7 @@ $forNavigation = "All Products";
             </ul>
             <ul class="navbar-end ml-0">
               <li class="navbar-item">
-                <a href="logout.php" class="btn btn-solid-border"
+              <a href="logout.php" onclick="return confirm('Are you sure you want to logout?')" class="btn btn-solid-border"
                   >Log-out <i class="fa fa-angle-right ml-2"></i
                 ></a>
               </li>
@@ -345,8 +345,8 @@ $forNavigation = "All Products";
     </br>
     </br>
 
-    <form>
-        <input type="text" placeholder="Search...">
+    <form action="searchItem.php" method="POST">
+        <input name="search" type="text" placeholder="Search...">
         <button type="submit">Search</button>
     </form>
 
@@ -582,4 +582,5 @@ $forNavigation = "All Products";
     <script src="js/main.js"></script>
 
   </body>
+
 </html>

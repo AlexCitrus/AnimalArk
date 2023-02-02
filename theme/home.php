@@ -1,10 +1,12 @@
-<!DOCTYPE html>
 <?php
+session_start();
 include('./functions.php');
-if (!isUser()) {
+if (!isLoggedIn()) {
 	header('location: index.php');
 }
 ?>
+
+<!DOCTYPE html>
 <html lang="zxx">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -96,7 +98,7 @@ if (!isUser()) {
             </ul>
             <ul class="navbar-end ml-0">
               <li class="navbar-item">
-                <a href="./logout.php" class="btn btn-solid-border"
+              <a href="logout.php" onclick="return confirm('Are you sure you want to logout?')" class="btn btn-solid-border"
                   >Log-out <i class="fa fa-angle-right ml-2"></i
                 ></a>
               </li>
