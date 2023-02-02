@@ -309,7 +309,7 @@ if($con === false)
                       </a>
                     </h4>
                   </div>
-                  <div id="sportswear" class="panel-collapse collapse">
+                  <div id="sportswear" class="panel-collapse collapse in">
                     <div class="panel-body">
                       <ul>
                         <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=C">Cat Food and Treats</a></li>
@@ -329,7 +329,7 @@ if($con === false)
                       </a>
                     </h4>
                   </div>
-                  <div id="mens" class="panel-collapse collapse">
+                  <div id="mens" class="panel-collapse collapse in">
                     <div class="panel-body">
                       <ul>
                         <li><a href="shop_prodbycategory.php?category_id=1&intendedFor=D">Dog Food and Treats</a></li>
