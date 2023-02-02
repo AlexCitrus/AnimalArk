@@ -132,14 +132,21 @@
 
 
             <div class="formbold-mb-3">
-              <label for="prod_cate" class="formbold-form-label">Category</label>
-              <input type="text" name="prod_cate" id="prod_cate" class="formbold-form-input" />
-            </div>
+                <label for="prod_cate" class="formbold-form-label">Category</label>
+                <select name="prod_cate" id="prod_cate" class="formbold-form-input">
+                    <option hidden disabled selected></option>
+                  <option value="Food and Treats">Food and Treats</option>
+                  <option value="Medications and Others">Medications and Others</option>
+                  <option value="Shampoo">Shampoo</option>
+                  <option value="Soap">Soap</option>
+                  <option value="Vitamins">Vitamins</option>
+                </select>
+              </div>
 
             <div class="formbold-mb-3" style="color: black;">
                 <label for="prod_cate" class="formbold-form-label">Product Intended for:</label>
-                <input type="radio" name="group1" value="option1"> Dog
-                <input type="radio" name="group1" value="option2"> Cat
+                <input type="checkbox" name="group1" value="option1"> Dog
+                <input type="checkbox" name="group1" value="option2"> Cat
             </div>
       
             <!-- <div class="formbold-mb-3">
