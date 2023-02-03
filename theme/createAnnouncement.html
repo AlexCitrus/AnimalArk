@@ -72,7 +72,7 @@
       <div class="container">
         <nav class="navbar">
           <div class="navbar-brand">
-            <a class="navbar-item mr-5" href="index.php">
+            <a class="navbar-item mr-5" href="admin_home_new.html">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
             <button
@@ -90,26 +90,21 @@
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="index.php">Home</a>
+                <a class="navbar-link" href="admin_home_new.html">Home</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="cust_shop.html">Products</a>
+                <a class="navbar-link" href="admin_shop.php">Products</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="./FAQs.html">FAQ</a>
+                <a class="navbar-link" href="FAQs.html">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">
               <li class="navbar-item">
-                <a href="" class="btn btn-solid-border">
-                  <i class="fa fa-shopping-cart"></i>
-                </a>
-              </li>
-              <li class="navbar-item">
-                <a href="./login.html" class="btn btn-solid-border"
-                  >Log-in <i class="fa fa-angle-right ml-2"></i
+              <a href="logout.php" onclick="return confirm('Are you sure you want to logout?')" class="btn btn-solid-border"
+                  >Log-out <i class="fa fa-angle-right ml-2"></i
                 ></a>
               </li>
             </ul>
@@ -126,10 +121,7 @@
               <h2 class="subtitle colored is-4">
                 Use the form on the right to create an announment.
               </h2>
-              <p>
-                Having an account will give you certain features like boom panes
-                ganern
-              </p>
+
             </div>
             <div class="column right has-text-centered">
               <form action="createAnnouncement.php" method="POST">

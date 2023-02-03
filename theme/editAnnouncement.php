@@ -1,3 +1,14 @@
+<?php
+  $con = mysqli_connect("localhost", "id20237149_animalark", "P@ssw0rd!123", "id20237149_animalark_db") or die(mysqli_error()); //Connect to server
+  $query = mysqli_query($con, "SELECT * FROM announcements"); // SQL Query
+  
+  while($row = mysqli_fetch_array($query))
+  {
+  $subject =  $row['subject'];
+  $description = $row['description'];
+  }
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -72,7 +83,7 @@
       <div class="container">
         <nav class="navbar">
           <div class="navbar-brand">
-            <a class="navbar-item mr-5" href="index.php">
+            <a class="navbar-item mr-5" href="admin_home_new.html">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
             <button
@@ -90,26 +101,21 @@
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="index.php">Home</a>
+                <a class="navbar-link" href="admin_home_new.html">Home</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="cust_shop.html">Products</a>
+                <a class="navbar-link" href="admin_shop.php">Products</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="./FAQs.html">FAQ</a>
+                <a class="navbar-link" href="FAQs.html">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">
               <li class="navbar-item">
-                <a href="" class="btn btn-solid-border">
-                  <i class="fa fa-shopping-cart"></i>
-                </a>
-              </li>
-              <li class="navbar-item">
-                <a href="./login.html" class="btn btn-solid-border"
-                  >Log-in <i class="fa fa-angle-right ml-2"></i
+              <a href="logout.php" onclick="return confirm('Are you sure you want to logout?')" class="btn btn-solid-border"
+                  >Log-out <i class="fa fa-angle-right ml-2"></i
                 ></a>
               </li>
             </ul>
@@ -126,22 +132,20 @@
               <h2 class="subtitle colored is-4">
                 Use the form on the right to edit an announment.
               </h2>
-              <p>
-                Having an account will give you certain features like boom panes
-                ganern
-              </p>
+
             </div>
             <div class="column right has-text-centered">
-              <form action="createAnnouncement.php" method="POST">
+              <form action="editAnnouncement.php" method="POST">
                 <div class="field">
                   <div class="control">
                     <label class="label"> Subject </label>
-                    <input
-                    class="textarea"
-                    name="subject"
-                    type="text"
-                    required="required"
-                    />
+                    <textarea
+                      class="textarea"
+                      name="description"
+                      type="text"
+                      required="required"
+                      rows="2"> 
+                      <?php echo $subject; ?></textarea>
                   </div>
                 </div>
 
@@ -154,8 +158,8 @@
                       name="description"
                       type="text"
                       required="required"
-                      rows="10"
-                    ></textarea>
+                      rows="10"> 
+                      <?php echo $description; ?></textarea>
                   </div>
                 </div>
 
@@ -167,6 +171,50 @@
                 </button>
                 <br />
               </form>
+
+              <?php
+                  if($_SERVER["REQUEST_METHOD"] == "POST")
+                  {
+                      //intiializes the variables
+                      date_default_timezone_set('Asia/Hong_Kong'); 
+                      $subject = ($_POST['subject']);
+                      $description = ($_POST['description']);
+                      $tempDate = date('Y-m-d h:i:s A');
+
+                      $month = date("F", strtotime($tempDate));
+                      $day = date("d", strtotime($tempDate));
+                      $year = date("Y", strtotime($tempDate));
+                      $hour = date("h", strtotime($tempDate));
+                      $mins = date("i", strtotime($tempDate));
+                      $a = date("a", strtotime($tempDate));
+
+                      $date_posted = $month . " " . $day . ", " . $year . " " . $hour . ":" . $mins . " " . $a;
+
+                      $bool = true;
+                      $db_name = "id20237149_animalark_db";
+                      $db_username = "id20237149_animalark";
+                      $db_pass = "P@ssw0rd!123";
+                      $db_host = "localhost";
+
+                      $con = mysqli_connect("$db_host","$db_username","$db_pass", "$db_name") or die(mysqli_error()); //Connect to server
+                      
+                      $query = "SELECT * from announcements";
+                      $results = mysqli_query($con, $query); //Query the users table
+
+                      while($row = mysqli_fetch_array($results)) //display all rows from query
+                      {
+                          $table_announcements = $row['subject'];
+                      }
+
+                      //adds teh newly inputted user data to the users db
+                      if($bool) // checks if bool is true
+                      {
+                          mysqli_query($con, "UPDATE announcements SET subject='$subject',description='$description',date_posted='$date_posted'"); //Inserts the value to table users
+                          Print '<script>alert("Announcement Edited!");</script>'; // Prompts the user
+                          Print '<script>window.location.assign("createAnnouncement.html");</script>'; // redirects to register.php
+                      }
+                    }
+                  ?>
             </div>
           </div>
         </div>

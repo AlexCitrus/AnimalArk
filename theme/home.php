@@ -4,8 +4,23 @@ include('./functions.php');
 if (!isLoggedIn()) {
 	header('location: index.php');
 }
-?>
 
+$db_name = "id20237149_animalark_db";
+$db_username = "id20237149_animalark";
+$db_pass = "P@ssw0rd!123";
+$db_host = "localhost";
+
+$con = mysqli_connect("$db_host", "$db_username", "$db_pass", "$db_name") or die(mysqli_error()); //Connect to server
+
+  $id = $_SESSION['user'];
+  $qyr = "SELECT * from users WHERE email='$id'";
+  $results = mysqli_query($con, $qyr);
+
+    while ($row1 = mysqli_fetch_array($results)) {
+      $name = $row1['fname'];
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="zxx">
   <head>
@@ -71,7 +86,7 @@ if (!isLoggedIn()) {
       <div class="container">
         <nav class="navbar">
           <div class="navbar-brand">
-            <a class="navbar-item mr-5" href="index.php">
+            <a class="navbar-item mr-5" href="home.php">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
             <button
@@ -89,7 +104,7 @@ if (!isLoggedIn()) {
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="index.php">Home</a>
+                <a class="navbar-link" href="home.php">Home</a>
               </li>
 
               <li class="navbar-item">
@@ -123,12 +138,10 @@ if (!isLoggedIn()) {
               >
               <h1 class="my-4">Animal Ark Pet Care Center</h1>
               <p class="mb-6">
-                Veritatis earum aliquid doloribus molestias, eveniet molestiae
-                aperiam ratione. Facilis velit voluptatibus impedit eligendi
-                delectus illo earum voluptatum, laudantium molestiae!
+                  Welcome, <?php echo $name?>!
               </p>
 
-              <a href="about.html" target="_blank" class="btn btn-main"
+              <a href="https://www.facebook.com/animalarkpetcarecenter" target="_blank" class="btn btn-main"
                 >Learn more about Animal Ark<i
                   class="fa fa-angle-right ml-2"
                 ></i
@@ -163,7 +176,7 @@ if (!isLoggedIn()) {
                     $con = mysqli_connect("localhost", "id20237149_animalark", "P@ssw0rd!123", "id20237149_animalark_db") or die(mysqli_error()); //Connect to server
                     $query = mysqli_query($con, "SELECT * FROM announcements"); // SQL Query
                     
-                    while($row = mysqli_fetch_array($query)) // prints the prospects
+                    while($row = mysqli_fetch_array($query))
                     {
                     echo "<b>Subject: </b>";
                     echo $row['subject'] . "</br>" . "</br>";

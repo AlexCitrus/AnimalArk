@@ -86,7 +86,7 @@
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="./FAQs.html">FAQ</a>
+                <a class="navbar-link" href="FAQs.html">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">
@@ -112,12 +112,10 @@
               >
               <h1 class="my-4">Animal Ark Pet Care Center</h1>
               <p class="mb-6">
-                Veritatis earum aliquid doloribus molestias, eveniet molestiae
-                aperiam ratione. Facilis velit voluptatibus impedit eligendi
-                delectus illo earum voluptatum, laudantium molestiae!
+                Welcome! Get started by logging in or registering your account.
               </p>
 
-              <a href="about.html" target="_blank" class="btn btn-main"
+              <a href="https://www.facebook.com/animalarkpetcarecenter" target="_blank" class="btn btn-main"
                 >Learn more about Animal Ark<i
                   class="fa fa-angle-right ml-2"
                 ></i

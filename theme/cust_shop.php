@@ -307,7 +307,7 @@ $forNavigation = "All Products";
       <div class="container">
         <nav class="navbar">
           <div class="navbar-brand">
-            <a class="navbar-item mr-5" href="index.php">
+            <a class="navbar-item mr-5" href="home.php">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
             <button
@@ -337,6 +337,11 @@ $forNavigation = "All Products";
               </li>
             </ul>
             <ul class="navbar-end ml-0">
+            <li class="navbar-item">
+                <a href="order.html" class="btn btn-solid-border">
+                  <i class="fa fa-shopping-cart"></i>
+                </a>
+              </li>
               <li class="navbar-item">
               <a href="logout.php" onclick="return confirm('Are you sure you want to logout?')" class="btn btn-solid-border"
                   >Log-out <i class="fa fa-angle-right ml-2"></i

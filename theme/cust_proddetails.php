@@ -253,7 +253,7 @@ if($con === false)
       <div class="container">
         <nav class="navbar">
           <div class="navbar-brand">
-            <a class="navbar-item mr-5" href="index.php">
+          <a class="navbar-item mr-5" href="home.php">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
             <button
@@ -271,22 +271,21 @@ if($con === false)
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="index.php">Home</a>
+                <a class="navbar-link" href="home.php">Home</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="about.html">Products</a>
+                <a class="navbar-link" href="admin_shop.php">Products</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="project.html">FAQ</a>
+                <a class="navbar-link" href="FAQs.html">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">
-              
               <li class="navbar-item">
-                <a href="login.html" class="btn btn-solid-border"
-                  >Log-in <i class="fa fa-angle-right ml-2"></i
+              <a href="logout.php" onclick="return confirm('Are you sure you want to logout?')" class="btn btn-solid-border"
+                  >Log-out <i class="fa fa-angle-right ml-2"></i
                 ></a>
               </li>
             </ul>

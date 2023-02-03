@@ -1,12 +1,5 @@
 <!DOCTYPE html>
 
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html lang="zxx">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -65,7 +58,7 @@
       <div class="container">
         <nav class="navbar">
           <div class="navbar-brand">
-            <a class="navbar-item mr-5" href="index.html">
+            <a class="navbar-item mr-5" href="admin_home_new.html">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
             <button
@@ -83,26 +76,22 @@
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="index.html">Home</a>
+                <a class="navbar-link" href="admin_home_new.html">Home</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="about.html">Shop</a>
+                <a class="navbar-link" href="admin_shop.php">Shop</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="project.html">FAQ</a>
+                <a class="navbar-link" href="FAQs.html">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">
+
               <li class="navbar-item">
-                <a href="contact.html" class="btn btn-solid-border">
-                  <i class="fa fa-shopping-cart"></i>
-                </a>
-              </li>
-              <li class="navbar-item">
-                <a href="contact.html" class="btn btn-solid-border"
-                  >Log-in <i class="fa fa-angle-right ml-2"></i
+                <a href="logout.php" onclick="return confirm('Are you sure you want to logout?')" class="btn btn-solid-border"
+                  >Log-out <i class="fa fa-angle-right ml-2"></i
                 ></a>
               </li>
             </ul>
@@ -124,11 +113,10 @@
     <div class="card" style="margin:20px;">
         <div class="card-body">
             <h5 class="card-title">Inventory</h5>
-            <p class="card-text">Some text to describe the card.</p>
+            <p class="card-text">This section allows the admin to add items to the shop, edit existing items, and delete items.</p>
             <div class="card-buttons">
-                <button class="btn btn-add" href="#">Add</button>
-                <button class="btn btn-edit" href="#">Edit</button>
-                <button class="btn btn-delete" href="#">Delete</button>
+              <a href="admin_shop.php"><button class="btn btn-add">Add</button></a>
+
             </div>
         </div>
     </div>
@@ -136,11 +124,10 @@
     <div class="card" style="margin:20px;">
         <div class="card-body">
             <h5 class="card-title">Announcements</h5>
-            <p class="card-text">Some text to describe the card.</p>
+            <p class="card-text">This section allows the admin to create a new announcement or edit the existing one.</p>
             <div class="card-buttons">
-                <button class="btn btn-add" href="#">Add</button>
-                <button class="btn btn-edit" href="#">Edit</button>
-                <button class="btn btn-delete" href="#">Delete</button>
+                <a href="createAnnouncement.html"><button class="btn btn-add">Add</button></a>
+                <a href="editAnnouncement.php"><button class="btn btn-edit">Edit</button></a>
             </div>
         </div>
     </div>

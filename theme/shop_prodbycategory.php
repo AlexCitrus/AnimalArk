@@ -348,15 +348,15 @@ else
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="index.php">Home</a>
+                <a class="navbar-link" href="home.php">Home</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="about.html">Products</a>
+                <a class="navbar-link" href="cust_shop.php">Products</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="project.html">FAQ</a>
+                <a class="navbar-link" href="FAQs.html">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">

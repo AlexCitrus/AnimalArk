@@ -255,21 +255,21 @@ function getItems($con, $product_id)
 //   }
 // }
 
-// $db_name = "id20237149_animalark_db";
-// $db_username = "id20237149_animalark";
-// $db_pass = "P@ssw0rd!123";
-// $db_host = "localhost";
+$db_name = "id20237149_animalark_db";
+$db_username = "id20237149_animalark";
+$db_pass = "P@ssw0rd!123";
+$db_host = "localhost";
 
-// $con = new mysqli($db_host, $db_username, $db_pass, $db_name);
-// if($con === false) 
-//     die('Couldn\'t connect: ' . $con->connect_errno());
+$con = new mysqli($db_host, $db_username, $db_pass, $db_name);
+if($con === false) 
+    die('Couldn\'t connect: ' . $con->connect_errno());
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "animalark_db";
+// $host = "localhost";
+// $user = "root";
+// $pass = "";
+// $db = "animalark_db";
 
-$con = new mysqli($host, $user, $pass, $db);
+// $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 
   die('Couldn\'t connect: ' . $con->connect_errno());
 
@@ -334,7 +334,7 @@ $forNavigation = "All Products";
       <div class="container">
         <nav class="navbar">
           <div class="navbar-brand">
-            <a class="navbar-item mr-5" href="admin_home.html">
+            <a class="navbar-item mr-5" href="admin_home_new.html">
               <img src="images/logo.png" width="200" alt="logo" />
             </a>
             <button
@@ -352,15 +352,15 @@ $forNavigation = "All Products";
           <div class="navbar-menu" id="navigation">
             <ul class="navbar-start">
               <li class="navbar-item">
-                <a class="navbar-link" href="admin_home.html">Home</a>
+                <a class="navbar-link" href="admin_home_new.html">Home</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="about.html">Products</a>
+                <a class="navbar-link" href="admin_shop.php">Products</a>
               </li>
 
               <li class="navbar-item">
-                <a class="navbar-link" href="./FAQs.html">FAQ</a>
+                <a class="navbar-link" href="FAQs.html">FAQ</a>
               </li>
             </ul>
             <ul class="navbar-end ml-0">

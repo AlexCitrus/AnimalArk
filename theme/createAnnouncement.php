@@ -5,7 +5,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     date_default_timezone_set('Asia/Hong_Kong'); 
     $subject = ($_POST['subject']);
     $description = ($_POST['description']);
-    $tempDate = date('Y-m-d h:i:s');
+    $tempDate = date('Y-m-d h:i:s A');
 
     $month = date("F", strtotime($tempDate));
     $day = date("d", strtotime($tempDate));

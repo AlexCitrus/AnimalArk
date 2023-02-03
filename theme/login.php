@@ -34,7 +34,7 @@ if (isset($_POST['email']) && isset($_POST['pass'])) {
                 if($row['user_type']=="admin"){
                     $_SESSION['user'] = $email;
                     print '<script>alert("Welcome Admin!");</script>'; // Prompts the user
-                    print '<script>window.location.assign("admin_home.php");</script>'; // redirects to login.php
+                    print '<script>window.location.assign("admin_home_new.html");</script>'; // redirects to login.php
                 }
                 
                 else if($row['user_type']=="user"){
