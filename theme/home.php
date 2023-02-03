@@ -93,6 +93,10 @@ if (!isLoggedIn()) {
               </li>
 
               <li class="navbar-item">
+                <a class="navbar-link" href="cust_shop.php">Products</a>
+              </li>
+              
+              <li class="navbar-item">
                 <a class="navbar-link" href="./FAQs.html">FAQ</a>
               </li>
             </ul>
