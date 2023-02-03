@@ -662,27 +662,20 @@
    cursor: pointer;
    transition: ease .3s;
  } 
- 
- button.formbold-btn:hover {
+
+
+ /* For button blad */
+.formbold-btn:hover {
   background: #8BC34A;
   color: #ffffff;
 } 
 
-button.formbold-btn[disabled]{
+.formbold-btn[disabled]{
  background-color: gray;
  color: black;
+ pointer-events: none;
 }
-
  
- 
- 
- 
- 
- 
- 
-
-
-
 
 
  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
