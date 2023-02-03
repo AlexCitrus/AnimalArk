@@ -74,7 +74,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     </head>
 
     <body>
-        <a href="viewallitems.php">VIEW ALL ITEMS</a>
         <form action="" method="post">
             <table>
                 <tr>
