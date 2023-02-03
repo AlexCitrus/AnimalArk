@@ -95,6 +95,28 @@
    padding: 7rem 0px;
  }
  
+ table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  text-align: right;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
  .btn {
    display: inline-block;
    font-size: 14px;
@@ -662,22 +684,18 @@
    cursor: pointer;
    transition: ease .3s;
  } 
- 
- button:hover {
-   background: #8BC34A;
-   color: #ffffff;
- } 
- 
- 
- 
- 
- 
- 
- 
 
 
-
-
+ /* For button blad */
+.formbold-btn:hover {
+  background: #8BC34A;
+  color: #ffffff;
+} 
+ 
+.formbold-btn[disabled]:hover {
+  background-color: gray;
+  color: black;
+}
 
  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 

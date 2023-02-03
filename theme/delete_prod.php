@@ -441,11 +441,12 @@ $con->close();
               </div>
     
             <!-- <input type="submit" name="submitbtn" class="formbold-btn" value="Submit"> -->
+            <!-- <button class="formbold-btn"disabled>Submit</button> -->
             <?php
               if(sizeof($product_items) > 0)
                 echo "<button class=\"formbold-btn\" disabled>Submit</button>";
               else
-                 echo "<button class=\"formbold-btn\">Submit</button>";
+                echo "<button class=\"formbold-btn\">Submit</button>";
             ?>
           </form>
           <br/>
