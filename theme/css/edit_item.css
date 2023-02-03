@@ -691,14 +691,11 @@ tr:nth-child(even) {
   background: #8BC34A;
   color: #ffffff;
 } 
-
-.formbold-btn[disabled]{
- background-color: gray;
- color: black;
- pointer-events: none;
-}
  
-
+.formbold-btn[disabled]:hover {
+  background-color: gray;
+  color: black;
+}
 
  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
