@@ -95,6 +95,28 @@
    padding: 7rem 0px;
  }
  
+ table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  text-align: right;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
  .btn {
    display: inline-block;
    font-size: 14px;
