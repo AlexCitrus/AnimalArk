@@ -1,45 +1,62 @@
 <?php
-function getNumberOfItems($con) 
+
+function getProductName($con, $product_id)
 {
-    $final_size = 0;
-    $qry = "SELECT * FROM items";
-    $result = $con->query($qry);
+    $query = "SELECT * FROM products WHERE id='$product_id'";
+    $result = $con->query($query);
     $numrows = $result->num_rows;
-
-    if($numrows != "" && $numrows != 0)
+    
+    if($result != "") 
     {
-        $final_size = $numrows;
-        return $final_size;
-    }
-
-    return 0;
-}
-
-function getProductId($con)
-{
-    $qry = "SELECT * FROM items";
-    $result = $con->query($qry);
-    $numrows = $result->num_rows;
-
-    if ($numrows != "" && $numrows != 0) 
-    {
-        for ($i = 1; $i <= $numrows; $i++)
+        for($i=0; $i<$numrows; $i++) 
         {
-
             $row = $result->fetch_assoc();
             extract($row);
 
-            if($i == $numrows) 
-                return $product_id;
-
-            continue;
+            return $name;
         }
-    }
+    } 
 }
 
-$productId = $itemVariation = $itemPrice = $itemStocks = $itemVisibility = $itemImage = $itemImageFilename = "";
-$prospectproductid = $product_name = "";
-$items_db_rows = 0;
+function getItemImage($con, $id)
+{
+    $query = "SELECT * FROM items WHERE id='$id'";
+    $result = $con->query($query);
+    $numrows = $result->num_rows;
+    
+    if($result != "") 
+    {
+        for($i=0; $i<$numrows; $i++) 
+        {
+            $row = $result->fetch_assoc();
+            extract($row);
+
+            return $image;
+        }
+    } 
+}
+
+function getItemImageFilename($con, $id)
+{
+    $query = "SELECT * FROM items WHERE id='$id'";
+    $result = $con->query($query);
+    $numrows = $result->num_rows;
+    
+    if($result != "") 
+    {
+        for($i=0; $i<$numrows; $i++) 
+        {
+            $row = $result->fetch_assoc();
+            extract($row);
+
+            return $image_filename;
+        }
+    } 
+}
+
+$item_variation = $item_image = $item_image_filename = $item_price = $item_visibility = "";
+$itemVariation = $itemImage = $itemPrice = $itemVisibility = "";
+$prospectid = $prospectproductid  = $id = $item_stocks = $itemStocks = 0;
 
 $host = "localhost";
 $user = "root";
@@ -50,46 +67,98 @@ $con = new mysqli($host, $user, $pass, $db);
 if($con === false) 
     die('Couldn\'t connect: ' . $con->connect_errno());
 
-if($_SERVER["REQUEST_METHOD"] == "POST")
+if(isset($_POST["id"]) && !empty($_POST["id"]))
 {
-    $itemProductId = $_POST['id'];
+    echo "debug";
+    echo $item_image_filename;
+
+    $itemId = $_POST['id'];
     $itemVariation = $_POST['itemVariation'];
     $itemPrice = $_POST['itemPrice'];
     $itemStocks = $_POST['itemStocks'];
-    
+
+    echo "before visibility";
+
     if($_POST['itemVisibility'] == "on")
         $itemVisibility = "Y";
     else
         $itemVisibility = "N";
 
-    $itemImage = file_get_contents($_FILES["itemImage"]["tmp_name"]);
-    $itemImageFilename = $_FILES["itemImage"]["name"];
-
-    $qry = "INSERT INTO items (product_id, variation, image, image_filename, price, stocks, is_visible) VALUES(?, ?, ?, ?, ?, ?, ?)";
-
-    if($sql = $con->prepare($qry)) 
+    if($_FILES['itemImage']['error'] > 0)
     {
-        $sql->bind_param("issssis", $param_productId, $param_variation, $param_image, $param_imageFilename, $param_price, $param_stocks, $param_isVisible);
-        $param_productId = $itemProductId;
-        $param_variation = $itemVariation;
-        $param_image = $itemImage;
-        $param_imageFilename = $itemImageFilename;
-        $param_price = $itemPrice;
-        $param_stocks = $itemStocks;
-        $param_isVisible = $itemVisibility;
+        echo "empty file";
 
-        if ($sql->execute() != "")
-            header("location: admin_shop.php");
+        $itemImage = getItemImage($con, $itemId);
+        $itemImageFilename = getItemImageFilename($con, $itemId);
     }
 
+    else
+    {
+        $itemImage = file_get_contents($_FILES["itemImage"]["tmp_name"]);
+        $itemImageFilename = $_FILES["itemImage"]["name"];
+        
+    }
+
+    //updates the db
+    $qry = "UPDATE items SET variation=?, image=?, image_filename=?, price=?, stocks=?, is_visible=? WHERE id=?";
+
+    echo $qry;
+    if ($sql = $con->prepare($qry)) {
+        echo "test";
+        $sql->bind_param("ssssisi", $param_variation, $param_image, $param_image_filename, $param_price, $param_stocks, $param_visibility, $param_id);
+
+        $param_variation = $itemVariation;
+        $param_image = $itemImage;
+        $param_image_filename = $itemImageFilename;
+        $param_price = $itemPrice;
+        $param_stocks = $itemStocks;
+        $param_visibility = $itemVisibility;
+        $param_id = $itemId;
+
+        if ($sql->execute())
+            header("location: edit_prod.php?id=$prospectproductid");
+        else
+            echo "Oops! Something went wrong. Please try again later.";
+
+    }
     $sql->close();
-}
+    
+} 
 
 else
 {
-    if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) 
+    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))) 
     {
-        $prospectproductid = $_GET['id'];
+        $id = $_GET["id"];
+        //retrieves the info to be displayed in the form fields
+        $query = "SELECT * FROM items WHERE id='$id'";
+        $result = $con->query($query);
+        $numrows = $result->num_rows;
+        
+        if($result != "") 
+        {
+            for($i=0; $i<$numrows; $i++) 
+            {
+                
+                $row = $result->fetch_assoc();
+                extract($row);
+                
+                $prospectid = $id;
+                $prospectproductid = $product_id;
+                $item_variation = $variation;
+                $item_image = $image;
+                $item_image_filename = $image_filename;
+                $item_price = $price;
+                $item_stocks = $stocks;
+                $item_visibility = $is_visible;
+
+            }
+            
+        
+        } 
+        
+        else
+            header("location: edit_prod.php?id=$prospectproductid");
     }
 
 }
@@ -197,38 +266,35 @@ else
 
     <div class="formbold-main-wrapper">
         <div class="formbold-form-wrapper">    
-          <form action="create_item.php" method="POST" enctype="multipart/form-data">
+        <form action="edit_item.php" method="POST" enctype="multipart/form-data">
             <div class="formbold-form-title">
-              <h2 class="">Create Item</h2>
-              <p>
-                Simply input the necessary details, add a product image, and publish your new item to the site.
-                 Start selling and reaching a wider audience in no time!
-              </p>
+              <h2 class="">Edit Item</h2>
             </div>
-            <input type="hidden" name="id" value="<?php echo $prospectproductid; ?>">
+            <input type="hidden" name="id" value="<?php echo $prospectid; ?>">
             <div class="formbold-mb-3">
               <label for="itemVariation" class="formbold-form-label">Item Variation</label>
-              <input type="text" name="itemVariation" id="itemVariation" class="formbold-form-input" required>
+              <input type="text" name="itemVariation" id="itemVariation" class="formbold-form-input" value="<?php echo $item_variation; ?>">
             </div>
 
-            <!-- <form action="upload.php" method="post" enctype="multipart/form-data"> -->
-                <label for="itemImage" class="formbold-form-label">Item Image</label>
-                <div class="image-upload">
-                  <img src="#" id="preview" alt="Image placeholder.">
-                </div>
-                </br>
-                <input type="file" accept="image/*" name="itemImage" id="itemImage" required>
-              <!-- </form> -->
+            <label for="itemImage" class="formbold-form-label">Item Image</label>
+            <label for="currentImage" class="formbold-form-label">Current Image</label>
+            <img src="data:image/jpeg;base64, <?php echo base64_encode($item_image); ?>"/>
+            <p><?php echo $item_image_filename; ?></p>
+            <div class="image-upload">
+                <img src="#" id="preview" alt="Image placeholder.">
+            </div>
+            </br>
+            <input type="file" accept="image/*" name="itemImage" id="itemImage">
 
 
             <div class="formbold-input-flex">
               <div>
                 <label for="itemPrice" class="formbold-form-label">Item Price</label>
-                <input type="text" name="itemPrice" id="itemPrice" class="formbold-form-input" placeholder="₱ 0.00" required>
+                <input type="text" name="itemPrice" id="itemPrice" class="formbold-form-input" value="<?php echo $item_price; ?>">
               </div>
               <div>
                 <label for="itemStocks" class="formbold-form-label">Item Stocks</label>
-                <input type="number" name="itemStocks" id="itemStocks" class="formbold-form-input" required>
+                <input type="number" name="itemStocks" id="itemStocks" class="formbold-form-input" value="<?php echo $item_stocks; ?>">
               </div>
 
               
@@ -236,7 +302,12 @@ else
       
             <div class="formbold-mb-3" style="color: black;">
                 <label for="itemVisibility" class="formbold-form-label">Is item visible?</label>
-                <input type="checkbox" name="itemVisibility">
+                <?php
+                    if($item_visibility == "Y")
+                        echo "<input type=\"checkbox\" name=\"itemVisibility\" checked>";
+                    else
+                        echo "<input type=\"checkbox\" name=\"itemVisibility\">";
+                ?>
             </div>
 
             <div class="formbold-checkbox-wrapper">
@@ -244,6 +315,8 @@ else
       
             <button class="formbold-btn">Submit</button>
           </form>
+          <br/>
+          <a href="edit_prod.php?id=<?php echo $prospectproductid; ?>"> <button type="submit">Cancel</button> </a>
         </div>
       </div>
 

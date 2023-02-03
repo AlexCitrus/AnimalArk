@@ -92,13 +92,12 @@ function displayProduct($product, $all, $forNavigation)
             <div class=\"overlay-content\">
               <h2>In Stock: </h2>
               <p>$itemStocks</p>
-              <a href=\"cust_proddetails.php?id=$productId&item_id=$itemId&navigation=$forNavigation\" class=\"btn btn-default add-to-cart\"></i>View</a>
             </div>
           </div>
         </div>
         <div class=\"choose\">
             <ul class=\"nav nav-pills nav-justified\">
-            <li><a href=\"edit_prod.php?id=$productId\" class=\"btn btn-default add-to-cart\"><i class=\"fa fa-plus-square\"></i>Edit</a></li>
+            <li><a href=\"edit_prod.php?id=$productId\"><i class=\"fa fa-plus-square\"></i>Edit</a></li>
             <li><a href=\"delete_prod.php?id=$productId\"><i class=\"fa fa-plus-square\"></i>Delete</a></li>
             </ul>
         </div>
@@ -152,9 +151,8 @@ function displayProduct($product, $all, $forNavigation)
           </div>
           <div class=\"choose\">
             <ul class=\"nav nav-pills nav-justified\">
-            <li><a href=\"edit_prod.php?id=$productId\" class=\"btn btn-default add-to-cart\"><i class=\"fa fa-plus-square\"></i>Edit</a></li>
+            <li><a href=\"edit_prod.php?id=$productId\"><i class=\"fa fa-plus-square\"></i>Edit</a></li>
             <li><a href=\"delete_prod.php?id=$productId\"><i class=\"fa fa-plus-square\"></i>Delete</a></li>
-            </ul>
         </div>
         </div>
         </div>

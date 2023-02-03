@@ -1,4 +1,157 @@
 <?php
+class Product 
+{
+  public $productId;
+  public $productName;
+  public $categoryId;
+  public $intendedFor;
+  public $description;
+  public $variations;
+
+  function __construct($productId, $productName, $category, $intendedFor, $description, $variations)
+  {
+    $this->productId = $productId;
+    $this->productName = $productName;
+    $this->categoryId = $category;
+    $this->intendedFor = $intendedFor;
+    $this->description = $description;
+    $this->variations = $variations;
+  }
+}
+
+class Item
+{
+  public $itemId;
+  public $itemVariation;
+  public $itemImage;
+  public $itemPrice;
+  public $itemStocks;
+
+  function __construct($itemId, $itemVariation, $itemImage, $itemPrice, $itemStocks) 
+  {
+    $this->itemId = $itemId;
+    $this->itemVariation = $itemVariation;
+    $this->itemImage = $itemImage;
+    $this->itemPrice = $itemPrice;
+    $this->itemStocks = $itemStocks;
+  }
+}
+
+function getProducts($con, $category, $intendedFor)
+{
+  
+  $products = array();
+  $variations = array();
+  $groupingCondition = "";
+
+  if ($intendedFor == 'C')
+    $groupingCondition = "intended_for LIKE 'C%'";
+  else
+    $groupingCondition = "(intended_for LIKE 'D' OR intended_for LIKE '%D')";
+  
+
+  $qry = "SELECT * FROM products WHERE category_id='$category' AND $groupingCondition";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+
+        $row = $result->fetch_assoc();
+        extract($row);
+        $categoryName = getCategory($con, $category);
+        $variations = getItems($con, $id);
+
+        $product = new Product($id, $name, $categoryName, $intended_for, $description, $variations);
+
+        array_push($products, $product);
+      }
+  }
+
+  return $products;
+}
+
+function getCategory($con, $category_id)
+{
+  $qry = "SELECT * FROM categories WHERE id='$category_id'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+
+        $row = $result->fetch_assoc();
+        extract($row);
+
+        return $category;
+      }
+  }
+}
+
+function getItems($con, $product_id)
+{
+  $items = array();
+
+  $qry = "SELECT * FROM items WHERE product_id='$product_id'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+  
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 1; $i <= $numrows; $i++)
+      {
+        $row = $result->fetch_assoc();
+        extract($row);
+
+        $item = new Item($id, $variation, $image, $price, $stocks);
+        array_push($items, $item);
+      }
+  }
+
+  return $items;
+}
+
+function getItem($con, $item_id)
+{
+  $qry = "SELECT * FROM items WHERE id='$item_id'";
+  $result = $con->query($qry);
+  $numrows = $result->num_rows;
+  if ($numrows != "" && $numrows != 0) 
+  {
+      for ($i = 0; $i < $numrows; $i++)
+      {
+        $item = $result->fetch_assoc();
+        return $item;
+      }
+  }
+}
+
+function getProduct($con, $product_id)
+{
+    $variations = array();
+    $qry = "SELECT * FROM products WHERE id='$product_id'";
+    $result = $con->query($qry);
+    $numrows = $result->num_rows;
+    
+    if ($numrows != "" && $numrows != 0) 
+    {
+        for ($i = 1; $i <= $numrows; $i++)
+        {
+          $row = $result->fetch_assoc();
+          extract($row);
+        //   $categoryName = getCategory($con, $category_id);
+          $variations = getItems($con, $id);
+  
+          $product = new Product($id, $name, $category_id, $intended_for, $description, $variations);
+  
+          return $product;
+        }
+    }
+}
 function getCategories($con) 
 {
     $categories = array();
@@ -62,30 +215,38 @@ else
     {
         $id = $_GET["id"];
         //displays the info of to be deleted prospect
-        $query = "SELECT * FROM products WHERE id='$id'";
-        $result = $con->query($query);
-        $numrows = $result->num_rows;
+        // $query = "SELECT * FROM products WHERE id='$id'";
+        // $result = $con->query($query);
+        // $numrows = $result->num_rows;
         
-        if($result != "") 
-        {
-            for($i=0; $i<$numrows; $i++) 
-            {
-                $row = $result->fetch_assoc();
-                extract($row);
+        // if($result != "") 
+        // {
+        //     for($i=0; $i<$numrows; $i++) 
+        //     {
+        //         $row = $result->fetch_assoc();
+        //         extract($row);
                 
-                $prospectid = $id;
-                $product_name = $name;
-                $product_description = $description;
-                $product_category = $category_id;
-                $product_targets = $intended_for;
-            }
+        //         $prospectid = $id;
+        //         $product_name = $name;
+        //         $product_description = $description;
+        //         $product_category = $category_id;
+        //         $product_targets = $intended_for;
+        //     }
             
         
-        } 
-        else
-            header("location: admin_shop.php");
-        
+        // } 
+        // else
+        //     header("location: admin_shop.php");
+        $product = getProduct($con, $id);
+        $prospectid = $product->productId;
+        $product_name = $product->productName;
+        $product_description = $product->description;
+        $product_category = $product->categoryId;
+        $product_targets = $product->intendedFor;
+        $product_items = $product->variations;
     }
+        else
+          header("location: admin_shop.php");
 
 }
 
@@ -200,18 +361,31 @@ $con->close();
               <h2 class="">Delete Product</h2>
               <p class="prompt">Are you sure you want to delete product with details:</p>
             </div>
-            <input type="hidden" name="id" value="<?php echo $prospectid?>">
+            <input type="hidden" name="id" value="<?php echo $prospectid; ?>">
             <div class="formbold-mb-3">
               <label for="productName" class="formbold-form-label">Product Name</label>
-              <input type="text" name="productName" id="productName" class="formbold-form-input" value="<?php echo $product_name ?>" disabled/>
+              <input type="text" name="productName" id="productName" class="formbold-form-input" value="<?php echo $product_name; ?>" disabled>
             </div>
       
-            <div class="formbold-mb-3">
+            <div class="formbold-mb-3"> 
               <label for="productDescription" class="formbold-form-label">Product Description</label>
-              <textarea  class="formbold-form-prod_desc" id="productDescription" name="productDescription" rows="10" cols="50" disabled><?php echo $product_description ?></textarea>
+              <textarea  class="formbold-form-prod_desc" id="productDescription" name="productDescription" rows="10" cols="50" disabled><?php echo $product_description; ?></textarea>
             </div>
 
-
+            <div class="formbold-mb-3"> 
+              <label for="productVariants" class="formbold-form-label">Product Variants</label>
+              <?php
+                foreach($product_items as $item) 
+                {
+                  $item_id = $item->itemId;
+                  $item_variation = $item->itemVariation;
+              
+                  echo "
+                      <a href=\"delete_item.php?id=$item_id\" class=\"btn btn-solid-border\">$item_variation</a>
+                  ";
+                }
+              ?>
+            </div>
 
             <div class="formbold-mb-3">
                 <label for="productCategory" class="formbold-form-label">Category</label>
@@ -267,7 +441,12 @@ $con->close();
               </div>
     
             <!-- <input type="submit" name="submitbtn" class="formbold-btn" value="Submit"> -->
-            <button class="formbold-btn">Confirm</button>
+            <?php
+              if(sizeof($product_items) > 0)
+                echo "<button class=\"formbold-btn\" disabled>Submit</button>";
+              else
+                 echo "<button class=\"formbold-btn\">Submit</button>";
+            ?>
           </form>
           <br/>
           <br/>
