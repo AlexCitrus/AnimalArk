@@ -663,10 +663,16 @@
    transition: ease .3s;
  } 
  
- button:hover {
-   background: #8BC34A;
-   color: #ffffff;
- } 
+ button.formbold-btn:hover {
+  background: #8BC34A;
+  color: #ffffff;
+} 
+
+button.formbold-btn[disabled]{
+ background-color: gray;
+ color: black;
+}
+
  
  
  
